@@ -10,14 +10,15 @@
 <br>
 
 ![Platform](https://img.shields.io/badge/Windows%20·%20macOS%20·%20Linux-지원-2ea44f?style=flat-square)
-![Claude](https://img.shields.io/badge/Claude%20Pro-구독으로%20충분-8A63D2?style=flat-square)
-![Skills](https://img.shields.io/badge/스킬-11종-blue?style=flat-square)
+![Claude](https://img.shields.io/badge/Claude%20Code-지원-8A63D2?style=flat-square)
+![Codex](https://img.shields.io/badge/Codex%20CLI-지원-10A37F?style=flat-square)
+![Skills](https://img.shields.io/badge/스킬-12종-blue?style=flat-square)
 ![Packs](https://img.shields.io/badge/전공팩-7종-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
 <br>
 
-[**설치**](#-설치-5분) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-11종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
+[**설치**](#-설치-5분) · [**전공 팩**](#-전공-팩-끼우기) · [**첫 실행**](#-첫-실행--나는-어디서-시작하나) · [**스킬**](#-스킬-12종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
 
 </div>
 
@@ -93,6 +94,32 @@ bash install.sh
 ```
 </details>
 
+<details>
+<summary><b>Codex CLI 를 쓴다면</b> (ChatGPT 구독)</summary>
+
+```bash
+bash install-codex.sh                                          # macOS/Linux
+powershell -ExecutionPolicy Bypass -File .\install-codex.ps1    # Windows
+```
+
+Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표를 먼저 보세요.
+
+| | Claude Code | Codex CLI |
+| :-- | :-: | :-- |
+| 운영 규칙 | `CLAUDE.md` ✅ | `AGENTS.md` ✅ 자동 생성 |
+| MCP 서버 | ✅ | ✅ `codex mcp add` |
+| 슬래시 명령 (`/research` 등) | ✅ 12종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
+| 서브에이전트 4종 | ✅ 자동 위임 | ❌ → 역할 파일을 읽고 직접 수행 |
+
+절차 자체는 같습니다. Codex 도 파일을 읽을 수 있으므로,
+`"이 데이터 EDA 해줘"` 라고 하면 AGENTS.md 가 `.claude/skills/eda/SKILL.md` 를
+읽으라고 지시하고 같은 절차를 따릅니다.
+
+> 💡 **감사는 새 Codex 세션에서 돌리세요.** 서브에이전트가 없어 같은 대화에서
+> 자기 코드를 감사하게 되는데, 그러면 확증 편향이 생깁니다.
+
+</details>
+
 ### 준비물
 
 | 필요한 것 | 확인 | 없으면 |
@@ -123,6 +150,175 @@ claude mcp list     # paper-search 가 보이면 성공
 ```
 
 그다음 Claude Code를 **껐다 켜고** `/add-pack list` 를 쳐보세요.
+
+---
+
+## 🎯 첫 실행 — 나는 어디서 시작하나
+
+설치했는데 뭘 쳐야 할지 모르겠다면, **`/research` 하나만 기억하세요.**
+상황을 물어보고 거기에 맞는 경로로 데려갑니다.
+
+```
+cd ~/내연구폴더
+claude
+```
+```
+/research
+```
+
+<div align="center">
+
+**`/research`가 가장 먼저 묻는 것 — "어떤 상황인가요?"**
+
+</div>
+
+<table>
+<tr>
+<th width="6%">유형</th><th width="30%">이런 상황이면</th><th width="64%">이렇게 흘러갑니다</th>
+</tr>
+
+<tr>
+<td align="center"><b>A</b></td>
+<td>
+
+**논문이 먼저 있다**
+
+"교수님이 이 논문 읽고 우리 데이터에 적용해보래"<br>
+*(랩 연구 · 아이디어 확장)*
+
+</td>
+<td>
+
+```
+/lit-review  선행·후속 지형 파악
+     ↓
+/reproduce   저자 코드 재현 → 원 논문 수치와 대조
+     ↓
+데이터 차이 분석  내 데이터 vs 논문 데이터
+     ↓
+/experiment  원 방법 vs 내 아이디어 (ablation)
+     ↓
+/report
+```
+**핵심**: 재현 수치가 안 맞으면 원인부터 규명합니다.<br>
+안 그러면 "내 아이디어가 좋아서 오른 건지" 알 수 없어요.
+
+</td>
+</tr>
+
+<tr>
+<td align="center"><b>B</b></td>
+<td>
+
+**데이터가 이미 있다**
+
+"이 데이터로 뭘 예측/분류하고 싶다"<br>
+*(해커톤 · 캐글 · 데이콘 · 과제)*
+
+</td>
+<td>
+
+```
+/eda         성격 파악 + HTML 리포트
+     ↓        └ "이 데이터로 풀 수 있는 문제 3가지" 제안
+문제 확정     무엇을 예측할지 고른다
+     ↓
+/experiment  베이스라인 → 모델 비교 → 감사
+     ↓        └ 누수·검증오류 나오면 여기서 멈춤
+/report  (경진대회면 /submit 도)
+```
+**핵심**: 감사를 건너뛰지 마세요.<br>
+누수 하나로 리더보드 1등이 실격됩니다.
+
+</td>
+</tr>
+
+<tr>
+<td align="center"><b>C</b></td>
+<td>
+
+**주제만 있다**
+
+"청년 정주여건 개선하래…<br>데이터도 문제도 내가 정해야 해"<br>
+*(지자체 과제 · RISE · 자유주제)*
+
+</td>
+<td>
+
+```
+문제 쪼개기   데이터로 답할 질문 3~5개로
+     ↓
+/find-data   소스 탐색 → 실현가능성 확인 → 수집 스크립트
+     ↓        └ 못 구하면 질문을 바꿉니다. 정상이에요
+/eda         받은 게 쓸만한지
+     ↓
+/experiment  또는 기술통계 (예측 모델이 필요 없을 때도 많음)
+     ↓
+/report
+```
+**핵심**: 수집을 **스크립트로** 남깁니다.<br>
+보고서의 "데이터 출처" 절이 저절로 채워져요.
+
+</td>
+</tr>
+
+<tr>
+<td align="center"><b>D</b></td>
+<td>
+
+**결정을 내려야 한다**
+
+"근무표를 짜야 해"<br>"창구 몇 개면 될까"<br>
+*(산업공학 · 운영 개선)*
+
+</td>
+<td>
+
+```
+정식화       결정변수·목적함수·제약을 말로 먼저
+     ↓
+용량 회계     애초에 가능한 문제인가 (30초 산수)
+     ↓
+/optimize    작은 예제 → 실제 규모
+     ↓
+민감도 분석   입력이 흔들리면 답이 얼마나 바뀌나
+     ↓
+/report
+```
+**핵심**: 최적화의 실패는 푸는 단계가 아니라<br>**세우는 단계**에서 일어납니다.
+
+</td>
+</tr>
+</table>
+
+### 반자동입니다 — 매 단계 물어봅니다
+
+`/research`는 알아서 끝까지 달리지 않습니다. 각 단계가 끝나면 이렇게 멈춥니다:
+
+```
+## [2/5] 데이터 수집 완료
+
+한 일   : KOSIS·국토부에서 3개 데이터셋 수집
+결과    : 실거래가 184,332건, 연령별 인구 4,120행
+막힌 것 : 청년 전월세 부담률은 직접 제공하는 통계가 없음
+          → 실거래가 + 소득으로 계산해야 함
+
+다음은 [3/5] 탐색(/eda)입니다.
+  1. 계속 진행    2. 방향을 바꾸고 싶다    3. 여기서 멈춘다
+```
+
+**"막힌 것"을 반드시 보고합니다.** 숨기고 넘어가면 다음 단계에서 더 크게 터지니까요.
+
+> 💡 스킬을 직접 부르는 것도 당연히 됩니다.
+> 뭘 할지 이미 안다면 `/eda data/train.csv` 처럼 바로 쓰세요.
+> `/research`는 **길잡이**일 뿐 필수가 아닙니다.
+
+### 세션이 끊겼다면
+
+```
+/research 이어서
+```
+`plan.md`의 진행 기록을 읽고 다음 단계부터 재개합니다.
 
 ---
 
@@ -176,11 +372,12 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 ---
 
-## ⚡ 스킬 11종
+## ⚡ 스킬 12종
 
 | 스킬 | 하는 일 |
 | :-- | :-- |
-| **`/start`** | **현재 폴더를 연구 프로젝트로 초기화** (여기서 시작) |
+| **`/research`** | **연구 한 사이클 반자동 진행** — 뭘 할지 모르면 여기서 시작 |
+| **`/start`** | 현재 폴더를 연구 프로젝트로 초기화 |
 | `/lit-review <주제>` | 논문·근거 조사 → 정리 노트 |
 | `/find-data <주제>` | 공개 데이터 발굴 → **수집 스크립트** → `data/` 적재 |
 | `/eda <파일>` | 탐색적 분석 + HTML 리포트 |
@@ -195,10 +392,12 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 기본 흐름은 이렇습니다:
 
 ```
-/start ──→ /find-data ──→ /eda ──→ /experiment ──→ /report
-  ↑            ↑                        ↓
-프로젝트    데이터 없을 때          감사가 여기서 돈다
- 초기화                          (methods-reviewer)
+          ┌─────────────── /research (반자동 · 매 단계 확인) ───────────────┐
+          │                                                              │
+/start ──→ /lit-review ─→ /find-data ─→ /eda ─→ /experiment ─→ /report
+  ↑         논문부터        데이터부터            ↓
+프로젝트                                   감사가 여기서 돈다
+ 초기화                                    (methods-reviewer)
 ```
 
 **`/start` 부터 시작하세요.** 스킬은 어디서든 동작하지만 **운영 규칙은 폴더에
@@ -269,7 +468,7 @@ potato-kit/
 ├── start-jupyter.sh / .ps1   주피터 + MCP 연결
 ├── .claude/
 │   ├── agents/    literature-scout · data-analyst · methods-reviewer · report-writer
-│   ├── skills/    슬래시 명령 11종
+│   ├── skills/    슬래시 명령 12종
 │   └── packs/     전공 팩 7종 (+ 새 팩 만드는 법)
 └── projects/
     ├── _template/ 새 프로젝트 템플릿
@@ -318,6 +517,14 @@ Windows는 `Malgun Gothic`, macOS는 `AppleGothic`, Linux는 `NanumGothic`.
 - 한도가 임박하면: **결과 생성 > 정리 > 탐색** 순으로
 
 자세한 건 [`CLAUDE.md`](./CLAUDE.md)의 "사용량 아끼기" 절에 있습니다.
+</details>
+
+<details>
+<summary><b>Codex 에서 스킬이 안 먹혀요</b></summary>
+
+Codex 에는 슬래시 명령이 없습니다. `"이 데이터 EDA 해줘"` 처럼 **말로** 요청하면
+`~/.codex/AGENTS.md` 가 해당 스킬 파일을 읽으라고 라우팅합니다.
+AGENTS.md 가 없다면 `bash install-codex.sh` 를 돌리세요.
 </details>
 
 <details>
