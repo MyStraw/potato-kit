@@ -1,8 +1,8 @@
 """
-공개 데이터 수집 — 부산 폭염·한파 일수 (RISE 정주여건 대리지표)
+공개 데이터 수집 — 부산 폭염·한파 일수 (지자체 과제 예제 — 정주여건 대리지표)
 실행: conda run --no-capture-output -n potato python collect_busan_climate.py
 
-/find-data 스킬 절차
+/potato-find-data 스킬 절차
   1. 질문 → 데이터 요구사항 번역
   2. 소스 탐색 (팩의 데이터 소스 메모 우선)
   3. 실현 가능성 확인 ← 스크립트 다 짜기 전에 1건만 받아본다
