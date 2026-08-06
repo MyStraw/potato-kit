@@ -1,0 +1,49 @@
+# 데이터 — 절대 커밋하지 않는다
+data/
+!data/.gitkeep
+!projects/*/data/.gitkeep
+*.csv
+!projects/_example/reports/*.csv   # 예제 결과표는 예제의 일부
+*.xlsx
+*.parquet
+*.h5
+*.nc
+*.db
+*.sqlite
+
+# 비밀
+.env
+.env.*
+*.key
+credentials.json
+secrets.*
+
+# 산출물
+reports/*.pdf
+reports/*.pptx
+reports/*.html
+submissions/*.csv
+!projects/_example/reports/*.csv   # 예제 결과표는 예제의 일부
+*.pkl
+*.joblib
+models/
+
+# 외부 코드 (논문 재현용 클론)
+external/
+
+# 파이썬
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+*.egg-info/
+
+# OS·에디터
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 설계 기록 (후배 전달 시 제외 가능)
+_dev/
