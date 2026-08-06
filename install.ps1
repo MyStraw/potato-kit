@@ -111,8 +111,16 @@ Copy-Item -Path (Join-Path $KitDir "CLAUDE.md") `
           -Destination (Join-Path $ClaudeDir "potato-kit-rules.md") -Force -ErrorAction SilentlyContinue
 OK "운영 규칙 -> $ClaudeDir\potato-kit-rules.md"
 
-# 기본 모델을 sonnet 으로. Pro 구독은 Opus 를 쓸 수 없고, Sonnet 이 한도도 오래간다.
-# 이미 model 이 지정돼 있으면 건드리지 않는다.
+# 상태줄 스크립트 (화면 아래 계정·모델·컨텍스트·사용량 표시)
+$SlPath = Join-Path $ClaudeDir "potato-statusline.ps1"
+Copy-Item -Path (Join-Path $KitDir ".claude\statusline\potato-statusline.ps1") `
+          -Destination $SlPath -Force -ErrorAction SilentlyContinue
+if (Test-Path $SlPath) { OK "상태줄 스크립트 -> $SlPath" }
+
+# settings.json:
+#  - 기본 모델을 sonnet 으로 (Pro 구독은 Opus 를 쓸 수 없고, Sonnet 이 한도도 오래간다)
+#  - 상태줄(statusLine) 등록
+# 이미 설정된 키는 건드리지 않는다.
 $SettingsPath = Join-Path $ClaudeDir "settings.json"
 try {
     # -AsHashtable 은 PowerShell 6+ 전용이라 쓰지 않는다 (Windows 기본은 5.1)
@@ -120,16 +128,36 @@ try {
     if ((Test-Path $SettingsPath) -and ((Get-Item $SettingsPath).Length -gt 0)) {
         $cfg = Get-Content $SettingsPath -Raw -Encoding UTF8 | ConvertFrom-Json
     }
-    if ($null -ne $cfg -and ($cfg.PSObject.Properties.Name -contains "model")) {
+    if ($null -eq $cfg) { $cfg = New-Object PSObject }
+    $changed = $false
+
+    if ($cfg.PSObject.Properties.Name -contains "model") {
         OK "기본 모델 = 기존 설정 유지 ($($cfg.model))"
     } else {
-        if ($null -eq $cfg) { $cfg = New-Object PSObject }
         $cfg | Add-Member -NotePropertyName model -NotePropertyValue "sonnet" -Force
+        $changed = $true
+        OK "기본 모델 = sonnet (Pro 구독에 맞춤)"
+    }
+
+    if ($cfg.PSObject.Properties.Name -contains "statusLine") {
+        OK "상태줄 = 기존 설정 유지 (바꾸려면 /potato-statusline)"
+    } elseif (Test-Path $SlPath) {
+        # Git Bash 가 있으면 상태줄 명령이 Git Bash 로 실행되므로 경로는 슬래시로 쓴다
+        $slFwd = $SlPath -replace '\\', '/'
+        $sl = New-Object PSObject
+        $sl | Add-Member -NotePropertyName type -NotePropertyValue "command"
+        $sl | Add-Member -NotePropertyName command `
+              -NotePropertyValue "powershell -NoProfile -ExecutionPolicy Bypass -File `"$slFwd`""
+        $cfg | Add-Member -NotePropertyName statusLine -NotePropertyValue $sl -Force
+        $changed = $true
+        OK "상태줄 등록 완료 (재시작하면 화면 아래에 나타납니다)"
+    }
+
+    if ($changed) {
         $json = $cfg | ConvertTo-Json -Depth 20
         # BOM 없는 UTF-8 로 쓴다 (Set-Content -Encoding UTF8 은 5.1 에서 BOM 을 붙여
         # JSON 파서가 못 읽을 수 있다)
         [System.IO.File]::WriteAllText($SettingsPath, $json, (New-Object System.Text.UTF8Encoding $false))
-        OK "기본 모델 = sonnet (Pro 구독에 맞춤)"
     }
 } catch {
     Warn "settings.json 자동 설정 실패 - Claude Code 에서 '/model sonnet' 을 직접 실행하세요"

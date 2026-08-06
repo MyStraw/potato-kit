@@ -101,7 +101,7 @@ copy_dir() {  # $1=src subdir, $2=label
   fi
 }
 
-copy_dir skills "스킬 12종"
+copy_dir skills "스킬 13종"
 copy_dir agents "서브에이전트 4종"
 copy_dir packs  "전공 팩 7종"
 
@@ -109,30 +109,48 @@ copy_dir packs  "전공 팩 7종"
 cp "$KIT_DIR/CLAUDE.md" "$CLAUDE_DIR/potato-kit-rules.md" 2>/dev/null \
   && ok "운영 규칙 → $CLAUDE_DIR/potato-kit-rules.md"
 
-# 기본 모델을 sonnet 으로. Pro 구독은 Opus 를 쓸 수 없고, Sonnet 이 한도도 오래간다.
-# 이미 model 이 지정돼 있으면 건드리지 않는다.
+# 상태줄 스크립트 (화면 아래 계정·모델·컨텍스트·사용량 표시)
+cp "$KIT_DIR/.claude/statusline/potato-statusline.py" "$CLAUDE_DIR/potato-statusline.py" 2>/dev/null \
+  && ok "상태줄 스크립트 → $CLAUDE_DIR/potato-statusline.py"
+
+# settings.json:
+#  - 기본 모델을 sonnet 으로 (Pro 구독은 Opus 를 쓸 수 없고, Sonnet 이 한도도 오래간다)
+#  - 상태줄(statusLine) 등록
+# 이미 설정된 키는 건드리지 않는다.
 SETTINGS="$CLAUDE_DIR/settings.json"
-MODEL_RESULT="$(python3 - "$SETTINGS" 2>/dev/null <<'PY'
+SETTINGS_RESULT="$(python3 - "$SETTINGS" "$CLAUDE_DIR/potato-statusline.py" 2>/dev/null <<'PY'
 import json, os, sys
-p = sys.argv[1]
+p, sl_script = sys.argv[1], sys.argv[2]
 try:
     cfg = json.load(open(p, encoding="utf-8")) if os.path.exists(p) and os.path.getsize(p) else {}
     assert isinstance(cfg, dict)
 except Exception:
     print("INVALID"); raise SystemExit(0)
+changed = False
 if "model" in cfg:
-    print("KEEP:" + str(cfg["model"]))
+    print("MODEL_KEEP:" + str(cfg["model"]))
 else:
-    cfg["model"] = "sonnet"
+    cfg["model"] = "sonnet"; changed = True
+    print("MODEL_SET")
+if "statusLine" in cfg:
+    print("SL_KEEP")
+else:
+    cfg["statusLine"] = {"type": "command", "command": 'python3 "%s"' % sl_script}
+    changed = True
+    print("SL_SET")
+if changed:
     os.makedirs(os.path.dirname(p), exist_ok=True)
     json.dump(cfg, open(p, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    print("SET")
 PY
 )"
-case "$MODEL_RESULT" in
-  SET)     ok "기본 모델 = sonnet (Pro 구독에 맞춤)" ;;
-  KEEP:*)  ok "기본 모델 = 기존 설정 유지 (${MODEL_RESULT#KEEP:})" ;;
-  *)       warn "settings.json 을 읽을 수 없습니다 — Claude Code 에서 '/model sonnet' 을 직접 실행하세요" ;;
+case "$SETTINGS_RESULT" in
+  INVALID|"") warn "settings.json 을 읽을 수 없습니다 — Claude Code 에서 '/model sonnet' 을 직접 실행하세요" ;;
+  *)
+    case "$SETTINGS_RESULT" in *MODEL_SET*) ok "기본 모델 = sonnet (Pro 구독에 맞춤)" ;;
+      *) ok "기본 모델 = 기존 설정 유지 ($(printf '%s' "$SETTINGS_RESULT" | sed -n 's/^MODEL_KEEP://p'))" ;; esac
+    case "$SETTINGS_RESULT" in *SL_SET*) ok "상태줄 등록 완료 (재시작하면 화면 아래에 나타납니다)" ;;
+      *) ok "상태줄 = 기존 설정 유지 (바꾸려면 /potato-statusline)" ;; esac
+    ;;
 esac
 
 # ---------------------------------------------------------------- 끝

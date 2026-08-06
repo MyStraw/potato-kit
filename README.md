@@ -12,13 +12,13 @@
 ![Platform](https://img.shields.io/badge/Windows%20·%20macOS%20·%20Linux-지원-2ea44f?style=flat-square)
 ![Claude](https://img.shields.io/badge/Claude%20Code-지원-8A63D2?style=flat-square)
 ![Codex](https://img.shields.io/badge/Codex%20CLI-지원-10A37F?style=flat-square)
-![Skills](https://img.shields.io/badge/스킬-12종-blue?style=flat-square)
+![Skills](https://img.shields.io/badge/스킬-13종-blue?style=flat-square)
 ![Packs](https://img.shields.io/badge/전공팩-7종-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
 <br>
 
-[**설치**](#-설치-5분) · [**처음이라면**](#-claude-code를-한-번도-안-써봤다면) · [**첫 실행**](#-첫-실행--나는-어디서-시작하나) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-12종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
+[**설치**](#-설치-5분) · [**처음이라면**](#-claude-code를-한-번도-안-써봤다면) · [**첫 실행**](#-첫-실행--나는-어디서-시작하나) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-13종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
 
 </div>
 
@@ -111,7 +111,7 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 | :-- | :-: | :-- |
 | 운영 규칙 | `CLAUDE.md` ✅ | `AGENTS.md` ✅ 자동 생성 |
 | MCP 서버 | ✅ | ✅ `codex mcp add` |
-| 슬래시 명령 (`/potato-research` 등) | ✅ 12종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
+| 슬래시 명령 (`/potato-research` 등) | ✅ 13종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
 | 서브에이전트 4종 | ✅ 자동 위임 | ❌ → 역할 파일을 읽고 직접 수행 |
 
 절차 자체는 같습니다. Codex 도 파일을 읽을 수 있으므로,
@@ -141,6 +141,7 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 4. 공통 코어 MCP 2종을 Claude Code에 등록
 5. 스킬·에이전트·팩을 설정 디렉토리로 복사
 6. 기본 모델을 Sonnet으로 지정 (이미 지정돼 있으면 건드리지 않음)
+7. 화면 아래 상태줄 등록 — 계정·모델·컨텍스트·구독 사용량 (기존 상태줄이 있으면 유지)
 ```
 
 > 💡 **유저 스코프로 설치되므로 어느 폴더에서든 동작합니다.**
@@ -240,7 +241,7 @@ Claude Code 안에서 `/`로 시작하는 명령입니다. **미리 짜둔 작�
 | 그냥 말하기 | `이 데이터 좀 살펴봐줘` ← 이것도 됩니다 |
 | 슬래시 명령 | `/potato-eda data/train.csv` ← 더 정확하고 빠릅니다 |
 
-**`/potato-` 까지만 치면 목록이 뜹니다.** 12개 중에 골라 쓰면 돼요.
+**`/potato-` 까지만 치면 목록이 뜹니다.** 13개 중에 골라 쓰면 돼요.
 
 </details>
 
@@ -507,6 +508,27 @@ claude
 여기에 `jupyter` MCP가 붙어 노트북에서 코드를 실행합니다.
 (`bash start-jupyter.sh` / `.ps1` 로 주피터를 먼저 띄우세요)
 
+### 🖥 상태줄 — 화면 아래 계기판
+
+설치하면 Claude Code 화면 맨 아래에 이런 줄이 자동으로 생깁니다:
+
+```
+🥔 potato@gmail.com | 📁 my-project (main) | Sonnet | 컨텍스트 34% | 사용량 5h 24% · 7d 41% | +156/-23
+```
+
+| 항목 | 뜻 |
+| --- | --- |
+| `potato@gmail.com` | 지금 로그인된 계정 |
+| `📁 my-project (main)` | 현재 폴더와 git 브랜치 |
+| `Sonnet` | 지금 쓰는 모델 |
+| `컨텍스트 34%` | 대화가 얼마나 찼나 — **80% 넘으면 새 세션을 여세요** |
+| `사용량 5h · 7d` | **Pro 구독 한도를 몇 % 썼나** (5시간 / 7일) — 한도 관리는 이걸 보세요 |
+| `+156/-23` | 이 세션에서 고친 코드 줄 수 |
+
+색이 초록 → 노랑 → 빨강으로 변하면 한도가 가까워진 겁니다.
+설치 직후엔 안 보이고 **Claude Code를 껐다 켜면** 나타납니다.
+안 나오거나 바꾸고 싶으면 → `/potato-statusline`
+
 ---
 
 ## 🧩 전공 팩 끼우기
@@ -553,7 +575,7 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 ---
 
-## ⚡ 스킬 12종
+## ⚡ 스킬 13종
 
 | 스킬 | 하는 일 |
 | :-- | :-- |
@@ -569,6 +591,7 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 | `/potato-slides` | 발표용 PPTX *(요청했을 때만)* |
 | `/potato-submit` | 경진대회 제출 파일 + 개선 루프 |
 | `/potato-add-pack` | 전공 팩 켜기 / 끄기 / 만들기 |
+| `/potato-statusline` | 화면 아래 [상태줄](#-상태줄--화면-아래-계기판) 설치 / 해제 / 커스텀 |
 
 기본 흐름은 이렇습니다:
 
@@ -651,7 +674,8 @@ potato-kit/
 ├── LICENSE                   MIT
 ├── .claude/
 │   ├── agents/    literature-scout · data-analyst · methods-reviewer · report-writer
-│   ├── skills/    슬래시 명령 12종
+│   ├── skills/    슬래시 명령 13종
+│   ├── statusline/ 상태줄 스크립트 (py·ps1)
 │   └── packs/     전공 팩 7종 (+ 새 팩 만드는 법)
 └── projects/
     ├── _template/ 새 프로젝트 템플릿
@@ -666,6 +690,16 @@ potato-kit/
 <summary><b>/potato-add-pack 이 안 먹혀요</b></summary>
 
 Claude Code를 껐다 켜세요. 스킬은 시작할 때 읽힙니다.
+</details>
+
+<details>
+<summary><b>상태줄이 안 보여요 / 이상해요</b></summary>
+
+- 설치 직후엔 안 보입니다 — **Claude Code를 껐다 켜세요.**
+- `🥔` 만 나오는 건 정상 폴백입니다(세션 정보를 아직 못 받은 것). 계속 그러면
+  `/potato-statusline` 으로 재설치하세요.
+- 사용량(5h·7d)은 **첫 응답이 온 뒤부터** 표시됩니다.
+- 끄고 싶으면: `/potato-statusline off`
 </details>
 
 <details>
