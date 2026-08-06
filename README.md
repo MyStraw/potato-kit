@@ -11,13 +11,13 @@
 
 ![Platform](https://img.shields.io/badge/Windows%20·%20macOS%20·%20Linux-지원-2ea44f?style=flat-square)
 ![Claude](https://img.shields.io/badge/Claude%20Pro-구독으로%20충분-8A63D2?style=flat-square)
-![Skills](https://img.shields.io/badge/스킬-10종-blue?style=flat-square)
+![Skills](https://img.shields.io/badge/스킬-11종-blue?style=flat-square)
 ![Packs](https://img.shields.io/badge/전공팩-7종-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
 <br>
 
-[**설치**](#-설치-5분) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-10종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
+[**설치**](#-설치-5분) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-11종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
 
 </div>
 
@@ -176,10 +176,11 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 ---
 
-## ⚡ 스킬 10종
+## ⚡ 스킬 11종
 
 | 스킬 | 하는 일 |
 | :-- | :-- |
+| **`/start`** | **현재 폴더를 연구 프로젝트로 초기화** (여기서 시작) |
 | `/lit-review <주제>` | 논문·근거 조사 → 정리 노트 |
 | `/find-data <주제>` | 공개 데이터 발굴 → **수집 스크립트** → `data/` 적재 |
 | `/eda <파일>` | 탐색적 분석 + HTML 리포트 |
@@ -194,10 +195,14 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 기본 흐름은 이렇습니다:
 
 ```
-/find-data → /eda → /experiment → /report
-     ↑                    ↓
-  데이터 없을 때      감사가 여기서 돈다
+/start ──→ /find-data ──→ /eda ──→ /experiment ──→ /report
+  ↑            ↑                        ↓
+프로젝트    데이터 없을 때          감사가 여기서 돈다
+ 초기화                          (methods-reviewer)
 ```
+
+**`/start` 부터 시작하세요.** 스킬은 어디서든 동작하지만 **운영 규칙은 폴더에
+`CLAUDE.md` 가 있어야 적용됩니다.** `/start` 가 그걸 놓아줍니다.
 
 각 스킬은 **혼자서도, 이어서도** 동작합니다.
 
@@ -226,14 +231,22 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 ## 📂 프로젝트 시작하기
 
-```bash
-cp -r projects/_template projects/my-project     # macOS/Linux
+**어느 폴더에서든** Claude Code를 열고:
+
 ```
-```powershell
-Copy-Item -Recurse projects\_template projects\my-project   # Windows
+/start 내 연구 주제
 ```
 
-`plan.md`에 목표를 적고 그 폴더에서 Claude Code를 열면 됩니다.
+폴더 구조·`CLAUDE.md`·`plan.md`를 만들어주고, 프로젝트 성격(해커톤/논문/기관)과
+데이터 반출 제한을 물어본 뒤 그에 맞는 규칙을 넣어줍니다.
+
+> ⚠️ **`/start` 를 건너뛰면 운영 규칙이 적용되지 않습니다.** 스킬 자체는 동작하지만,
+> 데이터 보호·산출물 규칙 같은 상시 규칙은 폴더의 `CLAUDE.md` 에서 나옵니다.
+
+킷 안에서 시작하고 싶다면 템플릿을 복사해도 됩니다:
+```bash
+cp -r projects/_template projects/my-project
+```
 
 `projects/<이름>/CLAUDE.md`에 프로젝트 성격을 적어두면 **그 폴더에서만** 규칙이 바뀝니다:
 
@@ -256,7 +269,7 @@ potato-kit/
 ├── start-jupyter.sh / .ps1   주피터 + MCP 연결
 ├── .claude/
 │   ├── agents/    literature-scout · data-analyst · methods-reviewer · report-writer
-│   ├── skills/    슬래시 명령 10종
+│   ├── skills/    슬래시 명령 11종
 │   └── packs/     전공 팩 7종 (+ 새 팩 만드는 법)
 └── projects/
     ├── _template/ 새 프로젝트 템플릿
