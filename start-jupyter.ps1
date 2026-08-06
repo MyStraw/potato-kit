@@ -1,4 +1,4 @@
-# 주피터 서버를 띄우고 jupyter MCP를 연결한다 (Windows)
+﻿# 주피터 서버를 띄우고 jupyter MCP를 연결한다 (Windows)
 # 실행: powershell -ExecutionPolicy Bypass -File .\start-jupyter.ps1
 
 param([int]$Port = 8888)

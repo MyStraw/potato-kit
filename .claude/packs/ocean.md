@@ -31,12 +31,16 @@ domain: 조위·해류·부이 관측, 기상, 대기질, 수문
 ### Open-Meteo (기상·대기질) ⚠️미검증
 - **출처**: github.com/isdaniel/mcp_weather_server
 - **필요**: **API 키 불필요**
+- **설치**: 저장소 README 참조 (⚠️미검증). **MCP 없이도 된다** — Open-Meteo 는
+  일반 REST API 라 `requests` 로 직접 호출하면 되고, 실제 예시가
+  `projects/_example/collect_busan_climate.py` 에 있다
 - **제공**: 현재·과거 기상, 대기질, 시간대. 전 세계 커버리지
 - **주의**: 비상업적 사용은 무료. 대량 요청은 제한이 있다
 
 ### USGS Water ⚠️미검증
 - **출처**: github.com/mansurjisan/ocean-mcp
 - **필요**: API 키 불필요
+- **설치**: 저장소 README 참조 (⚠️미검증 — 실패하면 대안을 찾아달라고 한다)
 - **제공**: 하천 유량, 홍수 단계, 첨두 유량 이벤트, 관측소 정보 (미국)
 
 ## 파이썬 패키지
@@ -86,7 +90,7 @@ conda run -n potato pip install copernicusmarine cdsapi
 | **국립해양조사원 KHOA** | khoa.go.kr / 오픈API | **국내 조위·수온·염분·해류.** 키 무료 |
 | 해양수산부 해양환경정보 | meis.go.kr | 해양환경 측정망 |
 | 기상청 기상자료개방포털 | data.kma.go.kr | 기상·해양기상 부이. 키 무료 |
-| 한국수자원공사 WAMIS | wamis.go.kr | 수문·댐·하천 |
+| 국가수자원관리종합정보 WAMIS (한강홍수통제소 운영) | wamis.go.kr | 수문·댐·하천 |
 | 환경부 물환경정보시스템 | water.nier.go.kr | 수질 측정망 |
 | 공공데이터포털 | data.go.kr | 위 기관들의 API가 여기에도 등록돼 있다 |
 

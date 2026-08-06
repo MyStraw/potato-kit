@@ -1,4 +1,4 @@
-# potato-kit → Codex CLI 설치 (Windows PowerShell)
+﻿# potato-kit → Codex CLI 설치 (Windows PowerShell)
 # 실행: powershell -ExecutionPolicy Bypass -File .\install-codex.ps1
 #
 # Claude Code 와 Codex 는 구조가 다르다:
@@ -72,11 +72,12 @@ $Keep    = ""
 if ((Test-Path $Out) -and -not (Select-String -Path $Out -SimpleMatch $KitMark -Quiet)) {
     Copy-Item $Out "$Out.bak.$([int][double]::Parse((Get-Date -UFormat %s)))"
     Warn "기존 AGENTS.md 를 백업했습니다"
-    $Keep = (Get-Content $Out -Raw) + "`n`n---`n`n"
+    # -Encoding UTF8 필수: 5.1 은 BOM 없는 파일을 ANSI 로 읽어 한글이 깨진다
+    $Keep = (Get-Content $Out -Raw -Encoding UTF8) + "`n`n---`n`n"
 }
 
 # 운영 규칙 전문 (첫 줄 H1 제거)
-$rules = Get-Content (Join-Path $KitDir "CLAUDE.md")
+$rules = Get-Content (Join-Path $KitDir "CLAUDE.md") -Encoding UTF8
 if ($rules[0] -match '^# ') { $rules = $rules[1..($rules.Count - 1)] }
 $rulesText = $rules -join "`n"
 
@@ -143,7 +144,9 @@ medical · medical-plus · finance · libsci · ocean · industrial · korea
 팩 문서의 설치 명령에서 ``claude mcp add`` -> ``codex mcp add`` 로 바꿔 실행한다.
 "@
 
-($Keep + $header + $rulesText + $footer) | Set-Content $Out -Encoding UTF8
+# BOM 없는 UTF-8 로 쓴다 (5.1 의 Set-Content -Encoding UTF8 은 BOM 을 붙인다)
+[System.IO.File]::WriteAllText($Out, ($Keep + $header + $rulesText + $footer),
+    (New-Object System.Text.UTF8Encoding $false))
 OK "AGENTS.md -> $Out"
 
 Write-Host @"

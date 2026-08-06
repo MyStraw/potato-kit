@@ -38,9 +38,10 @@ description: 경진대회 제출 파일을 만들고 개선 루프를 관리한�
 ### 2. 제출 파일 생성
 
 ```python
+enc = 'utf-8'   # 캐글·해외 기준. 데이콘 등 한글 컬럼이 있으면 'utf-8-sig' (위 표 참고)
 sub = pd.read_csv('data/sample_submission.csv')
 sub['target'] = predictions
-sub.to_csv(f'submissions/sub_{tag}.csv', index=False, encoding='utf-8-sig')
+sub.to_csv(f'submissions/sub_{tag}.csv', index=False, encoding=enc)
 ```
 
 **생성 후 자동 검증**:

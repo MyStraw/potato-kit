@@ -1,9 +1,11 @@
 # 데이터 — 절대 커밋하지 않는다
-data/
-!data/.gitkeep
-!projects/*/data/.gitkeep
+# (data/ 통째 제외가 아니라 내용물 제외 — 그래야 .gitkeep 재포함이 가능하다.
+#  gitignore 는 행 끝 주석을 지원하지 않으므로 주석은 반드시 별도 줄에 쓴다)
+**/data/*
+!**/data/.gitkeep
 *.csv
-!projects/_example/reports/*.csv   # 예제 결과표는 예제의 일부
+# 예제 결과표는 예제의 일부라 커밋한다
+!projects/_example/reports/*.csv
 *.xlsx
 *.parquet
 *.h5
@@ -23,7 +25,6 @@ reports/*.pdf
 reports/*.pptx
 reports/*.html
 submissions/*.csv
-!projects/_example/reports/*.csv   # 예제 결과표는 예제의 일부
 *.pkl
 *.joblib
 models/

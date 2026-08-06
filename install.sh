@@ -101,7 +101,7 @@ copy_dir() {  # $1=src subdir, $2=label
   fi
 }
 
-copy_dir skills "스킬 10종"
+copy_dir skills "스킬 12종"
 copy_dir agents "서브에이전트 4종"
 copy_dir packs  "전공 팩 7종"
 

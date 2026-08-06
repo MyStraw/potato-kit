@@ -52,9 +52,10 @@ git clone <repo> external/<name>
 논문 코드는 대개 옛날 라이브러리를 쓴다. **전용 환경을 판다.**
 
 ```bash
-conda create -n repro-<이름> python=3.9 -y     # 논문 시기에 맞춰서
-conda run -n repro-<이름> pip install -r external/<name>/requirements.txt
+conda create -n potato-<이름> python=3.9 -y     # 논문 시기에 맞춰서
+conda run -n potato-<이름> pip install -r external/<name>/requirements.txt
 ```
+(환경 이름 규칙은 운영 규칙 4절과 같다: `potato-<프로젝트명>`)
 
 이러면 다른 프로젝트를 망가뜨리지 않는다.
 

@@ -99,11 +99,19 @@ tools: Read, Write, Edit, Bash, Grep, Glob
   `AppleGothic`(mac) / `NanumGothic`(Linux)).
 - 색만으로 구분되는 그림은 흑백 인쇄·색각 이상에서 읽히지 않는다. 형태·패턴도 함께 쓴다.
 
+## 형식 규칙 — md 먼저 (운영 규칙 5절)
+
+산출물은 **마크다운이 기본**이다. PDF·PPTX는 사용자가 요청·승인했을 때만 만든다.
+서브에이전트로 호출된 경우, 위임 프롬프트에 "PDF로/PPTX로"라는 명시가 없으면
+**md만 만들고** "변환은 사용자 확인 후"라고 보고한다. 서브에이전트는 사용자에게
+직접 물어볼 수 없기 때문이다.
+
 ## PDF 변환
 
 ```bash
-# pandoc 이 있으면 (권장)
-pandoc report.md -o report.pdf --pdf-engine=xelatex -V mainfont="맑은 고딕"
+# pandoc 이 있으면 (권장) — 폰트는 OS에 맞게
+pandoc report.md -o report.pdf --pdf-engine=xelatex -V mainfont="맑은 고딕"    # Windows
+#   mac:   -V mainfont="AppleGothic"      Linux: -V mainfont="NanumGothic"
 
 # 없으면 설치
 conda run -n potato pip install md2pdf

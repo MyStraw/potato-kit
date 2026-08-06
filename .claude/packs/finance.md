@@ -25,9 +25,10 @@ domain: 주가, 재무제표, 거시경제 시계열, 백테스트
 - **주의**: Yahoo Finance 비공식 API 기반이라 간헐적으로 막힐 수 있다.
   중요한 연구는 데이터를 받아서 로컬에 저장해두고 쓰자
 
-### FRED MCP ⚠️패키지 못 찾음
-- npm `fred-mcp` 없음(2026-08-06 확인).
-- **→ `pandas-datareader` 로 대체한다.** FRED 를 정식 지원한다:
+### FRED MCP ⚠️미검증
+- npm `fred-mcp` 는 없지만 `fred-mcp-server` 는 실재한다(2026-08-07 확인).
+  이 킷에서 연결까지는 확인하지 않았다. FRED API 키가 필요하다.
+- 확실한 길: **`pandas-datareader` 로 대체한다.** FRED 를 정식 지원한다:
   ```python
   import pandas_datareader as pdr
   gdp = pdr.get_data_fred("GDP", start="2010-01-01")
@@ -35,15 +36,17 @@ domain: 주가, 재무제표, 거시경제 시계열, 백테스트
 - FRED API 키(무료): https://fred.stlouisfed.org/docs/api/api_key.html
 
 ### OpenBB ⚠️미검증
-- **출처**: github.com/OpenBB-finance/OpenBB
+- **출처**: github.com/OpenBB-finance/OpenBB — MCP 서버는 PyPI `openbb-mcp-server`
 - **필요**: 소스별로 키가 다름 (무료 소스만 써도 된다)
-- **제공**: 100개 이상 데이터 소스를 하나의 인터페이스로 통합. MCP 서버 제공
+- **설치**: `conda run -n potato pip install openbb-mcp-server` (⚠️미검증 —
+  실패하면 Claude에게 대안을 찾아달라고 한다)
+- **제공**: 100개 이상 데이터 소스를 하나의 인터페이스로 통합
 - **언제 쓰나**: yfinance만으로 부족할 때. 데이터 소스를 파라미터 하나로 바꿀 수 있다
 
-### 설치
+### 설치 요약 — 검증된 것 하나면 시작할 수 있다
 
 ```bash
-claude mcp add -s user yfinance -- npx -y yahoo-finance-mcp   # ✅ 확인됨
+claude mcp add -s user yfinance -- npx -y yahoo-finance-mcp   # ✅ 연결 확인됨
 ```
 
 설치가 실패해도 아래 파이썬 패키지로 대부분 대체된다. 오히려 연구용으로는

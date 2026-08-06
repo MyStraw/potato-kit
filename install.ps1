@@ -1,4 +1,4 @@
-# potato-kit 설치 (Windows PowerShell)
+﻿# potato-kit 설치 (Windows PowerShell)
 # 실행: powershell -ExecutionPolicy Bypass -File .\install.ps1
 
 $ErrorActionPreference = "Continue"
@@ -103,7 +103,7 @@ foreach ($d in @("skills", "agents", "packs")) {
     $src = Join-Path $KitDir ".claude\$d"
     if (Test-Path $src) {
         Copy-Item -Path "$src\*" -Destination $dest -Recurse -Force -ErrorAction SilentlyContinue
-        OK "$d -> ~\.claude\$d\"
+        OK "$d -> $dest\"
     }
 }
 
@@ -115,15 +115,20 @@ OK "운영 규칙 -> $ClaudeDir\potato-kit-rules.md"
 # 이미 model 이 지정돼 있으면 건드리지 않는다.
 $SettingsPath = Join-Path $ClaudeDir "settings.json"
 try {
-    $cfg = @{}
+    # -AsHashtable 은 PowerShell 6+ 전용이라 쓰지 않는다 (Windows 기본은 5.1)
+    $cfg = $null
     if ((Test-Path $SettingsPath) -and ((Get-Item $SettingsPath).Length -gt 0)) {
-        $cfg = Get-Content $SettingsPath -Raw -Encoding UTF8 | ConvertFrom-Json -AsHashtable
+        $cfg = Get-Content $SettingsPath -Raw -Encoding UTF8 | ConvertFrom-Json
     }
-    if ($cfg.ContainsKey("model")) {
+    if ($null -ne $cfg -and ($cfg.PSObject.Properties.Name -contains "model")) {
         OK "기본 모델 = 기존 설정 유지 ($($cfg.model))"
     } else {
-        $cfg["model"] = "sonnet"
-        $cfg | ConvertTo-Json -Depth 20 | Set-Content $SettingsPath -Encoding UTF8
+        if ($null -eq $cfg) { $cfg = New-Object PSObject }
+        $cfg | Add-Member -NotePropertyName model -NotePropertyValue "sonnet" -Force
+        $json = $cfg | ConvertTo-Json -Depth 20
+        # BOM 없는 UTF-8 로 쓴다 (Set-Content -Encoding UTF8 은 5.1 에서 BOM 을 붙여
+        # JSON 파서가 못 읽을 수 있다)
+        [System.IO.File]::WriteAllText($SettingsPath, $json, (New-Object System.Text.UTF8Encoding $false))
         OK "기본 모델 = sonnet (Pro 구독에 맞춤)"
     }
 } catch {

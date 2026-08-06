@@ -61,10 +61,9 @@ description: potato-kit 전공 팩을 켜거나 끄거나 목록을 본다. 새 
 
 3. **확인을 받는다.** 설치는 시스템을 바꾸는 일이므로 사용자 승인 없이 진행하지 않는다.
 
-4. **환경을 준비한다.**
+4. **환경을 준비한다.** 이미 있으면 만들지 않는다:
    ```bash
-   conda env list | grep potato     # 없으면 만든다
-   conda create -n potato python=3.11 -y
+   conda env list | grep -q '^potato ' || conda create -n potato python=3.11 -y
    ```
 
 5. **파이썬 패키지를 먼저 설치한다.**

@@ -71,6 +71,7 @@ description: 분석 결과를 마크다운·PDF 보고서로 정리한다. 실�
 한글 폰트를 지정하지 않으면 깨진다.
 
 ```python
+import matplotlib.pyplot as plt, platform
 plt.rcParams['font.family'] = {
     'Windows': 'Malgun Gothic', 'Darwin': 'AppleGothic'
 }.get(platform.system(), 'NanumGothic')

@@ -17,7 +17,8 @@ domain: 서지 메타데이터, 인용 네트워크, 계량서지학
 시운전에서 확인한 사실: 공통 코어의 **`paper-search` MCP가 20개 이상의 플랫폼을
 이미 지원한다.** 아래 별도 MCP를 굳이 깔지 않아도 되는 경우가 많다.
 
-`paper-search`가 제공하는 도구 (검색/조회/다운로드 각각):
+`paper-search`가 지원하는 플랫폼 (대부분 검색·조회·다운로드 3종 도구,
+`core`·`europepmc`·`pmc`·`google_scholar`·`unpaywall` 은 검색만):
 
 ```
 arxiv · pubmed · pmc · europepmc · openalex · crossref · semantic

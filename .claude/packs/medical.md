@@ -22,7 +22,8 @@ Claude가 직접 조회할 수 있게 된다. 웹 검색으로 뒤지는 것보�
   conda run -n potato pip install biomcp-python
   claude mcp add -s user biomcp -- conda run --no-capture-output -n potato python -m biomcp run
   ```
-- **제공 도구** (21종): 내부적으로 40개 이상의 상위 소스를 조회한다
+- **제공 도구** (버전에 따라 20~40종): 내부적으로 40개 이상의 상위 소스를 조회한다.
+  아래는 대표적인 것들이다
   - `article_searcher` / `article_getter` — **PubMed·PubTator3** + 프리프린트.
     PMID·DOI로 초록·본문 조회
   - `trial_searcher` / `trial_getter` / `trial_protocol_getter` /

@@ -21,7 +21,7 @@ domain: KOSIS, 공공데이터포털, 실거래가, ECOS, 지자체 데이터
 
 ```bash
 conda run -n potato pip install requests beautifulsoup4 lxml
-conda run -n potato pip install pandas openpyxl xmltodict
+conda run -n potato pip install pandas openpyxl xmltodict python-dotenv
 conda run -n potato pip install PublicDataReader
 ```
 
@@ -59,6 +59,7 @@ ECOS_KEY=...
 ```
 
 ```python
+import os
 from dotenv import load_dotenv; load_dotenv()
 key = os.environ["DATA_GO_KR_KEY"]
 ```

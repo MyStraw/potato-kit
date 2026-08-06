@@ -129,12 +129,15 @@ run.font.size = Pt(28)
 ```python
 from pptx import Presentation; from pptx.util import Pt
 prs = Presentation(path)
-bad = [(i, p.font.size.pt, p.text[:30])
-       for i, s in enumerate(prs.slides, 1) for sh in s.shapes
-       if sh.has_text_frame for p in sh.text_frame.paragraphs
-       if p.font.size and p.text.strip() and p.font.size < Pt(20)]
-print(bad or "하한 통과")
+small = [(i, p.font.size.pt, p.text[:30])
+         for i, s in enumerate(prs.slides, 1) for sh in s.shapes
+         if sh.has_text_frame for p in sh.text_frame.paragraphs
+         if p.font.size and p.text.strip() and p.font.size < Pt(24)]
+print(small or "24pt 미만 없음")
 ```
+
+24pt 미만이 나오면 위 하한표와 대조한다 — 보조 불릿(20~23pt)과
+표지 부제(18~23pt)는 허용, **본문 주 불릿이 걸렸으면 키운다.**
 
 시운전에서 이 검사로 19pt 8건이 걸렸다. 규칙만 적어두고 확인하지 않으면 안 지켜진다.
 
@@ -161,7 +164,7 @@ theme: default
 ```
 
 **어느 쪽을 쓸지 물어본다.** 발표 직전 수정이 많을 것 같으면 A,
-내용이 자주 바뀌면 B.
+내용이 자주 바뀌면 B. 사용자가 선택을 맡기면 A(기본)로 간다.
 
 ## 그림 처리
 

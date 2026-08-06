@@ -604,7 +604,7 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 > **실화**: 이 킷을 만들면서 시운전으로 돌린 실험이 이 에이전트에게 **fail 판정**을
 > 받았습니다. 감사 에이전트가 직접 재현 스크립트를 짜서 돌린 결과,
-> `GroupKFold`가 층화를 하지 않는다는 걸 잡아내 **누수를 1.5배 과대평가했다**는
+> `GroupKFold`가 층화를 하지 않는다는 걸 잡아내 **누수를 약 1.4배 과대평가했다**는
 > 사실이 드러났습니다. 그 과정이 [`projects/_example/`](./projects/_example/)에 남아 있습니다.
 
 ---
@@ -645,8 +645,10 @@ potato-kit/
 ├── README.md                 지금 이 문서
 ├── GUIDE.md                  ★ 페르소나별 사용법 — 먼저 읽으세요
 ├── CLAUDE.md                 연구 운영 규칙 (프로젝트에 상속)
-├── install.sh / install.ps1  설치
+├── install.sh / install.ps1  설치 (Claude Code)
+├── install-codex.sh / .ps1   설치 (Codex CLI 용)
 ├── start-jupyter.sh / .ps1   주피터 + MCP 연결
+├── LICENSE                   MIT
 ├── .claude/
 │   ├── agents/    literature-scout · data-analyst · methods-reviewer · report-writer
 │   ├── skills/    슬래시 명령 12종
