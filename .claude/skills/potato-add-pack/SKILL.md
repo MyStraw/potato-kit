@@ -1,20 +1,20 @@
 ---
-name: add-pack
+name: potato-add-pack
 description: potato-kit 전공 팩을 켜거나 끄거나 목록을 본다. 새 분야 팩을 만들 수도 있다. 사용자가 "의료 팩 켜줘", "무슨 팩 있어?", "재료공학 팩 만들어줘" 같은 요청을 할 때 사용한다.
 ---
 
-# /add-pack — 전공 팩 관리
+# /potato-add-pack — 전공 팩 관리
 
 전공별 MCP 서버·파이썬 패키지·감사 체크리스트를 묶어 켜고 끈다.
 
 ## 사용법
 
 ```
-/add-pack list              팩 목록 보기
-/add-pack <이름>             팩 켜기
-/add-pack remove <이름>      팩 끄기
-/add-pack new <분야>         새 팩 만들기
-/add-pack status            지금 켜져 있는 것 확인
+/potato-add-pack list              팩 목록 보기
+/potato-add-pack <이름>             팩 켜기
+/potato-add-pack remove <이름>      팩 끄기
+/potato-add-pack new <분야>         새 팩 만들기
+/potato-add-pack status            지금 켜져 있는 것 확인
 ```
 
 ## 팩 정의 파일 위치
@@ -39,7 +39,7 @@ description: potato-kit 전공 팩을 켜거나 끄거나 목록을 본다. 새 
 | finance | 금융·시계열 | — |
 ...
 
-새 분야가 필요하면: /add-pack new <분야이름>
+새 분야가 필요하면: /potato-add-pack new <분야이름>
 ```
 
 ---
@@ -113,7 +113,7 @@ description: potato-kit 전공 팩을 켜거나 끄거나 목록을 본다. 새 
    표본 선택 편향, 결측 메커니즘, 불멸 시간 편향, 임상적 유의성 등
 
    ### 바로 해볼 것
-   /lit-review <관심 주제>
+   /potato-lit-review <관심 주제>
 
    **Claude Code를 껐다 켜야 MCP가 반영된다.**
    ```

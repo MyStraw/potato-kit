@@ -1,14 +1,14 @@
 ---
-name: find-data
+name: potato-find-data
 description: 공개 데이터를 발굴하고 수집 스크립트를 만들어 받아온다. 데이터가 아직 없고 어디서 구해야 할지 모를 때 사용한다. "데이터 어디서 구하지", "이 주제 데이터 찾아줘" 같은 요청에 사용.
 ---
 
-# /find-data — 데이터 발굴·수집
+# /potato-find-data — 데이터 발굴·수집
 
 ```
-/find-data 부산 청년 주거 실태
-/find-data 아파트 실거래가. 부산 2020년 이후
-/find-data 해수온 관측 자료
+/potato-find-data 부산 청년 주거 실태
+/potato-find-data 아파트 실거래가. 부산 2020년 이후
+/potato-find-data 해수온 관측 자료
 ```
 
 ## 이 스킬의 원칙
@@ -138,7 +138,7 @@ if __name__ == "__main__":
 **주의**
 - 2023년 행정동 개편으로 3개 동의 시계열이 끊긴다
 
-**다음**: /eda data/raw/rt_busan.csv
+**다음**: /potato-eda data/raw/rt_busan.csv
 ```
 
 ## 데이터를 못 찾았을 때
@@ -159,4 +159,4 @@ if __name__ == "__main__":
 
 ## 다음 단계
 
-`/eda` → 받은 데이터가 쓸만한지 확인
+`/potato-eda` → 받은 데이터가 쓸만한지 확인

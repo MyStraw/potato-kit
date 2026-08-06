@@ -81,5 +81,5 @@ MCP 없이 접근하는 것들:
 화합물 구조·생물활성·단백질까지 다루려면 `medical-plus` 팩을 함께 켠다.
 
 ```
-/add-pack medical-plus
+/potato-add-pack medical-plus
 ```

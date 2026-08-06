@@ -46,7 +46,7 @@ potato-kit은 그 반복을 없앱니다. 한 번 설치하면:
 **🧪 전공별로 갈아 끼웁니다**
 
 의료·금융·해양·문헌정보·산업공학…
-`/add-pack` 한 줄로 그 분야 데이터베이스가 붙습니다
+`/potato-add-pack` 한 줄로 그 분야 데이터베이스가 붙습니다
 
 </td>
 </tr>
@@ -108,11 +108,11 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 | :-- | :-: | :-- |
 | 운영 규칙 | `CLAUDE.md` ✅ | `AGENTS.md` ✅ 자동 생성 |
 | MCP 서버 | ✅ | ✅ `codex mcp add` |
-| 슬래시 명령 (`/research` 등) | ✅ 12종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
+| 슬래시 명령 (`/potato-research` 등) | ✅ 12종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
 | 서브에이전트 4종 | ✅ 자동 위임 | ❌ → 역할 파일을 읽고 직접 수행 |
 
 절차 자체는 같습니다. Codex 도 파일을 읽을 수 있으므로,
-`"이 데이터 EDA 해줘"` 라고 하면 AGENTS.md 가 `.claude/skills/eda/SKILL.md` 를
+`"이 데이터 EDA 해줘"` 라고 하면 AGENTS.md 가 `.claude/skills/potato-eda/SKILL.md` 를
 읽으라고 지시하고 같은 절차를 따릅니다.
 
 > 💡 **감사는 새 Codex 세션에서 돌리세요.** 서브에이전트가 없어 같은 대화에서
@@ -149,13 +149,13 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 claude mcp list     # paper-search 가 보이면 성공
 ```
 
-그다음 Claude Code를 **껐다 켜고** `/add-pack list` 를 쳐보세요.
+그다음 Claude Code를 **껐다 켜고** `/potato-add-pack list` 를 쳐보세요.
 
 ---
 
 ## 🎯 첫 실행 — 나는 어디서 시작하나
 
-설치했는데 뭘 쳐야 할지 모르겠다면, **`/research` 하나만 기억하세요.**
+설치했는데 뭘 쳐야 할지 모르겠다면, **`/potato-research` 하나만 기억하세요.**
 상황을 물어보고 거기에 맞는 경로로 데려갑니다.
 
 ```
@@ -163,12 +163,12 @@ cd ~/내연구폴더
 claude
 ```
 ```
-/research
+/potato-research
 ```
 
 <div align="center">
 
-**`/research`가 가장 먼저 묻는 것 — "어떤 상황인가요?"**
+**`/potato-research`가 가장 먼저 묻는 것 — "어떤 상황인가요?"**
 
 </div>
 
@@ -190,15 +190,15 @@ claude
 <td>
 
 ```
-/lit-review  선행·후속 지형 파악
+/potato-lit-review  선행·후속 지형 파악
      ↓
-/reproduce   저자 코드 재현 → 원 논문 수치와 대조
+/potato-reproduce   저자 코드 재현 → 원 논문 수치와 대조
      ↓
 데이터 차이 분석  내 데이터 vs 논문 데이터
      ↓
-/experiment  원 방법 vs 내 아이디어 (ablation)
+/potato-experiment  원 방법 vs 내 아이디어 (ablation)
      ↓
-/report
+/potato-report
 ```
 **핵심**: 재현 수치가 안 맞으면 원인부터 규명합니다.<br>
 안 그러면 "내 아이디어가 좋아서 오른 건지" 알 수 없어요.
@@ -219,13 +219,13 @@ claude
 <td>
 
 ```
-/eda         성격 파악 + HTML 리포트
+/potato-eda         성격 파악 + HTML 리포트
      ↓        └ "이 데이터로 풀 수 있는 문제 3가지" 제안
 문제 확정     무엇을 예측할지 고른다
      ↓
-/experiment  베이스라인 → 모델 비교 → 감사
+/potato-experiment  베이스라인 → 모델 비교 → 감사
      ↓        └ 누수·검증오류 나오면 여기서 멈춤
-/report  (경진대회면 /submit 도)
+/potato-report  (경진대회면 /potato-submit 도)
 ```
 **핵심**: 감사를 건너뛰지 마세요.<br>
 누수 하나로 리더보드 1등이 실격됩니다.
@@ -248,13 +248,13 @@ claude
 ```
 문제 쪼개기   데이터로 답할 질문 3~5개로
      ↓
-/find-data   소스 탐색 → 실현가능성 확인 → 수집 스크립트
+/potato-find-data   소스 탐색 → 실현가능성 확인 → 수집 스크립트
      ↓        └ 못 구하면 질문을 바꿉니다. 정상이에요
-/eda         받은 게 쓸만한지
+/potato-eda         받은 게 쓸만한지
      ↓
-/experiment  또는 기술통계 (예측 모델이 필요 없을 때도 많음)
+/potato-experiment  또는 기술통계 (예측 모델이 필요 없을 때도 많음)
      ↓
-/report
+/potato-report
 ```
 **핵심**: 수집을 **스크립트로** 남깁니다.<br>
 보고서의 "데이터 출처" 절이 저절로 채워져요.
@@ -279,11 +279,11 @@ claude
      ↓
 용량 회계     애초에 가능한 문제인가 (30초 산수)
      ↓
-/optimize    작은 예제 → 실제 규모
+/potato-optimize    작은 예제 → 실제 규모
      ↓
 민감도 분석   입력이 흔들리면 답이 얼마나 바뀌나
      ↓
-/report
+/potato-report
 ```
 **핵심**: 최적화의 실패는 푸는 단계가 아니라<br>**세우는 단계**에서 일어납니다.
 
@@ -293,7 +293,7 @@ claude
 
 ### 반자동입니다 — 매 단계 물어봅니다
 
-`/research`는 알아서 끝까지 달리지 않습니다. 각 단계가 끝나면 이렇게 멈춥니다:
+`/potato-research`는 알아서 끝까지 달리지 않습니다. 각 단계가 끝나면 이렇게 멈춥니다:
 
 ```
 ## [2/5] 데이터 수집 완료
@@ -303,20 +303,20 @@ claude
 막힌 것 : 청년 전월세 부담률은 직접 제공하는 통계가 없음
           → 실거래가 + 소득으로 계산해야 함
 
-다음은 [3/5] 탐색(/eda)입니다.
+다음은 [3/5] 탐색(/potato-eda)입니다.
   1. 계속 진행    2. 방향을 바꾸고 싶다    3. 여기서 멈춘다
 ```
 
 **"막힌 것"을 반드시 보고합니다.** 숨기고 넘어가면 다음 단계에서 더 크게 터지니까요.
 
 > 💡 스킬을 직접 부르는 것도 당연히 됩니다.
-> 뭘 할지 이미 안다면 `/eda data/train.csv` 처럼 바로 쓰세요.
-> `/research`는 **길잡이**일 뿐 필수가 아닙니다.
+> 뭘 할지 이미 안다면 `/potato-eda data/train.csv` 처럼 바로 쓰세요.
+> `/potato-research`는 **길잡이**일 뿐 필수가 아닙니다.
 
 ### 세션이 끊겼다면
 
 ```
-/research 이어서
+/potato-research 이어서
 ```
 `plan.md`의 진행 기록을 읽고 다음 단계부터 재개합니다.
 
@@ -341,10 +341,10 @@ claude
 ## 🧩 전공 팩 끼우기
 
 ```
-/add-pack list          # 목록 보기
-/add-pack medical       # 켜기
-/add-pack remove ocean  # 끄기
-/add-pack new 재료공학   # 목록에 없으면 새로 만들기
+/potato-add-pack list          # 목록 보기
+/potato-add-pack medical       # 켜기
+/potato-add-pack remove ocean  # 끄기
+/potato-add-pack new 재료공학   # 목록에 없으면 새로 만들기
 ```
 
 | 팩 | 무엇이 붙나 | 누구에게 |
@@ -376,32 +376,32 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 | 스킬 | 하는 일 |
 | :-- | :-- |
-| **`/research`** | **연구 한 사이클 반자동 진행** — 뭘 할지 모르면 여기서 시작 |
-| **`/start`** | 현재 폴더를 연구 프로젝트로 초기화 |
-| `/lit-review <주제>` | 논문·근거 조사 → 정리 노트 |
-| `/find-data <주제>` | 공개 데이터 발굴 → **수집 스크립트** → `data/` 적재 |
-| `/eda <파일>` | 탐색적 분석 + HTML 리포트 |
-| `/experiment` | 전처리 → 모델 비교 → **방법론 감사** → 결과 종합 |
-| `/reproduce <논문>` | 논문 + 저자 코드 재현 → 내 데이터에 적용 |
-| `/optimize` | 최적화·시뮬레이션 정식화 → 해 구하기 → 민감도 분석 |
-| `/report` | 결과를 마크다운 보고서로 *(PDF·PPTX는 물어본 뒤)* |
-| `/slides` | 발표용 PPTX *(요청했을 때만)* |
-| `/submit` | 경진대회 제출 파일 + 개선 루프 |
-| `/add-pack` | 전공 팩 켜기 / 끄기 / 만들기 |
+| **`/potato-research`** | **연구 한 사이클 반자동 진행** — 뭘 할지 모르면 여기서 시작 |
+| **`/potato-start`** | 현재 폴더를 연구 프로젝트로 초기화 |
+| `/potato-lit-review <주제>` | 논문·근거 조사 → 정리 노트 |
+| `/potato-find-data <주제>` | 공개 데이터 발굴 → **수집 스크립트** → `data/` 적재 |
+| `/potato-eda <파일>` | 탐색적 분석 + HTML 리포트 |
+| `/potato-experiment` | 전처리 → 모델 비교 → **방법론 감사** → 결과 종합 |
+| `/potato-reproduce <논문>` | 논문 + 저자 코드 재현 → 내 데이터에 적용 |
+| `/potato-optimize` | 최적화·시뮬레이션 정식화 → 해 구하기 → 민감도 분석 |
+| `/potato-report` | 결과를 마크다운 보고서로 *(PDF·PPTX는 물어본 뒤)* |
+| `/potato-slides` | 발표용 PPTX *(요청했을 때만)* |
+| `/potato-submit` | 경진대회 제출 파일 + 개선 루프 |
+| `/potato-add-pack` | 전공 팩 켜기 / 끄기 / 만들기 |
 
 기본 흐름은 이렇습니다:
 
 ```
-          ┌─────────────── /research (반자동 · 매 단계 확인) ───────────────┐
+          ┌─────────────── /potato-research (반자동 · 매 단계 확인) ───────────────┐
           │                                                              │
-/start ──→ /lit-review ─→ /find-data ─→ /eda ─→ /experiment ─→ /report
+/potato-start ──→ /potato-lit-review ─→ /potato-find-data ─→ /potato-eda ─→ /potato-experiment ─→ /potato-report
   ↑         논문부터        데이터부터            ↓
 프로젝트                                   감사가 여기서 돈다
  초기화                                    (methods-reviewer)
 ```
 
-**`/start` 부터 시작하세요.** 스킬은 어디서든 동작하지만 **운영 규칙은 폴더에
-`CLAUDE.md` 가 있어야 적용됩니다.** `/start` 가 그걸 놓아줍니다.
+**`/potato-start` 부터 시작하세요.** 스킬은 어디서든 동작하지만 **운영 규칙은 폴더에
+`CLAUDE.md` 가 있어야 적용됩니다.** `/potato-start` 가 그걸 놓아줍니다.
 
 각 스킬은 **혼자서도, 이어서도** 동작합니다.
 
@@ -433,13 +433,13 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 **어느 폴더에서든** Claude Code를 열고:
 
 ```
-/start 내 연구 주제
+/potato-start 내 연구 주제
 ```
 
 폴더 구조·`CLAUDE.md`·`plan.md`를 만들어주고, 프로젝트 성격(해커톤/논문/기관)과
 데이터 반출 제한을 물어본 뒤 그에 맞는 규칙을 넣어줍니다.
 
-> ⚠️ **`/start` 를 건너뛰면 운영 규칙이 적용되지 않습니다.** 스킬 자체는 동작하지만,
+> ⚠️ **`/potato-start` 를 건너뛰면 운영 규칙이 적용되지 않습니다.** 스킬 자체는 동작하지만,
 > 데이터 보호·산출물 규칙 같은 상시 규칙은 폴더의 `CLAUDE.md` 에서 나옵니다.
 
 킷 안에서 시작하고 싶다면 템플릿을 복사해도 됩니다:
@@ -480,7 +480,7 @@ potato-kit/
 ## 🆘 자주 막히는 곳
 
 <details>
-<summary><b>/add-pack 이 안 먹혀요</b></summary>
+<summary><b>/potato-add-pack 이 안 먹혀요</b></summary>
 
 Claude Code를 껐다 켜세요. 스킬은 시작할 때 읽힙니다.
 </details>
@@ -512,7 +512,7 @@ Windows는 `Malgun Gothic`, macOS는 `AppleGothic`, Linux는 `NanumGothic`.
 <summary><b>사용량 한도가 빨리 닳아요</b></summary>
 
 - 큰 파일을 통째로 읽지 말고 pandas로 요약만 보세요
-- 병렬 서브에이전트를 줄이세요 (`/experiment`에 "순차로 돌려줘")
+- 병렬 서브에이전트를 줄이세요 (`/potato-experiment`에 "순차로 돌려줘")
 - 주제가 바뀌면 `/clear` 로 새 세션을 여세요
 - 한도가 임박하면: **결과 생성 > 정리 > 탐색** 순으로
 

@@ -1,14 +1,14 @@
 ---
-name: eda
+name: potato-eda
 description: 데이터를 탐색하고 HTML 리포트를 만든다. 데이터를 처음 받았을 때, 분석 방향을 정하기 전에 사용한다. "이 데이터 좀 봐줘", "EDA 해줘" 같은 요청에 사용.
 ---
 
-# /eda — 탐색적 데이터 분석
+# /potato-eda — 탐색적 데이터 분석
 
 ```
-/eda data/train.csv
-/eda data/train.csv 타깃은 survived 컬럼
-/eda 시계열이야. 날짜 컬럼은 date
+/potato-eda data/train.csv
+/potato-eda data/train.csv 타깃은 survived 컬럼
+/potato-eda 시계열이야. 날짜 컬럼은 date
 ```
 
 ## 원칙
@@ -144,6 +144,6 @@ plt.rcParams['axes.unicode_minus'] = False
 EDA는 끝이 아니라 시작이다. 마지막에 다음 중 하나를 제안한다:
 
 - 문제 정의가 아직 흐릿하다 → "이 데이터로 풀 수 있는 문제 3가지 제안"
-- 방향이 정해졌다 → `/experiment`
-- 데이터가 부족하다 → `/find-data`로 보강
-- 의료·바이오라면 → `/lit-review`로 임상적 타당성 확인
+- 방향이 정해졌다 → `/potato-experiment`
+- 데이터가 부족하다 → `/potato-find-data`로 보강
+- 의료·바이오라면 → `/potato-lit-review`로 임상적 타당성 확인

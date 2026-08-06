@@ -24,7 +24,7 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 1. `results.md`, `plan.md`, `sources.md`를 읽는다.
 2. `reports/figs/`의 그림 목록을 확인한다.
 3. 노트북·스크립트가 있으면 훑는다.
-4. **결과가 없으면 만들지 않는다.** "먼저 `/experiment`를 돌려야 한다"고 말한다.
+4. **결과가 없으면 만들지 않는다.** "먼저 `/potato-experiment`를 돌려야 한다"고 말한다.
    없는 수치를 지어내는 것은 최악의 실패다.
 
 ## 독자를 먼저 정한다

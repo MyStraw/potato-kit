@@ -91,7 +91,7 @@ conda run -n potato pip install copernicusmarine cdsapi
 | 공공데이터포털 | data.go.kr | 위 기관들의 API가 여기에도 등록돼 있다 |
 
 **국내 연구라면 KHOA와 기상청이 주력이다.** NOAA는 방법론 참고나 비교 연구용으로.
-국내 소스는 MCP가 없으므로 `korea` 팩과 `/find-data`로 수집 스크립트를 만든다.
+국내 소스는 MCP가 없으므로 `korea` 팩과 `/potato-find-data`로 수집 스크립트를 만든다.
 
 ## 산업공학과 함께 쓸 때
 
@@ -100,5 +100,5 @@ conda run -n potato pip install copernicusmarine cdsapi
 관측 → 예측까지가 이 팩이고, 예측 → 결정이 그쪽이다.
 
 ```
-/add-pack industrial
+/potato-add-pack industrial
 ```

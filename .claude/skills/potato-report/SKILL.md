@@ -1,15 +1,15 @@
 ---
-name: report
+name: potato-report
 description: 분석 결과를 마크다운·PDF 보고서로 정리한다. 실험이 끝난 뒤 사용한다. "보고서 써줘", "결과 정리해줘", "PDF로 만들어줘" 같은 요청에 사용.
 ---
 
-# /report — 보고서 작성
+# /potato-report — 보고서 작성
 
 ```
-/report                        ← md 만들고 변환 여부를 물어본다
-/report 학술논문 형식으로
-/report 비전공자용. 수식 빼고 그림 위주로
-/report PDF 로                 ← 형식을 지정하면 묻지 않고 바로 만든다
+/potato-report                        ← md 만들고 변환 여부를 물어본다
+/potato-report 학술논문 형식으로
+/potato-report 비전공자용. 수식 빼고 그림 위주로
+/potato-report PDF 로                 ← 형식을 지정하면 묻지 않고 바로 만든다
 ```
 
 > **기본은 마크다운 하나다.** PDF·PPTX 는 만들지 않고 **물어본 뒤** 만든다.
@@ -19,7 +19,7 @@ description: 분석 결과를 마크다운·PDF 보고서로 정리한다. 실�
 
 1. `results.md`, `plan.md`, `sources.md`를 읽는다
 2. `reports/figs/`의 그림 목록을 확인한다
-3. **결과가 없으면 만들지 않는다.** "먼저 `/experiment`를 돌려야 한다"고 말한다.
+3. **결과가 없으면 만들지 않는다.** "먼저 `/potato-experiment`를 돌려야 한다"고 말한다.
    없는 수치를 지어내는 것은 최악의 실패다
 
 ## 독자를 먼저 정한다
@@ -88,7 +88,7 @@ plt.rcParams['axes.unicode_minus'] = False
 
 ```bash
 # pandoc (권장) — 있으면 이게 제일 깔끔하다
-pandoc reports/report.md -o reports/report.pdf \
+pandoc reports/potato-report.md -o reports/potato-report.pdf \
   --pdf-engine=xelatex -V mainfont="맑은 고딕"
 ```
 
@@ -105,7 +105,7 @@ pandoc + LaTeX 설치는 무겁다(Windows MiKTeX 수백 MB, macOS BasicTeX).
 ```python
 # conda run -n potato pip install markdown
 import markdown, pathlib, base64, re
-p = pathlib.Path("reports/report.md")
+p = pathlib.Path("reports/potato-report.md")
 md = p.read_text(encoding="utf-8")
 
 def inline(m):                       # 상대경로 그림 → base64 인라인
@@ -155,11 +155,11 @@ HTML만 만들면 안 된다. pandoc 이 없어서 HTML 로 했다고 말하고,
 그리고 **대답을 받은 뒤에만** 진행한다.
 
 - **1번(PDF)** → 아래 PDF 변환 절차. pandoc 이 없으면 HTML 폴백을 쓰고 그렇게 말한다
-- **2번(PPTX)** → `/slides` 로 넘긴다. 청중과 발표 시간을 함께 물어본다
+- **2번(PPTX)** → `/potato-slides` 로 넘긴다. 청중과 발표 시간을 함께 물어본다
 - **3번** → 여기서 끝. 더 만들지 않는다
 
 **예외** — 사용자가 처음부터 형식을 지정한 경우
-(`/report PDF로`, `/report 발표자료까지`)에는 묻지 않고 바로 만든다.
+(`/potato-report PDF로`, `/potato-report 발표자료까지`)에는 묻지 않고 바로 만든다.
 이미 답을 준 것을 다시 묻는 것도 낭비다.
 
 ## 문체

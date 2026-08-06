@@ -132,19 +132,19 @@ Write-Host @"
   ─────────
   1. Claude Code를 껐다 켜세요 (MCP는 시작할 때 연결됩니다)
   2. 확인:            claude mcp list
-  3. 전공 팩 켜기:     /add-pack list
+  3. 전공 팩 켜기:     /potato-add-pack list
   4. 사용법 읽기:      GUIDE.md  <- 페르소나별 사용 시나리오
 
   스킬은 유저 스코프로 설치되어 **어느 폴더에서든** 동작합니다.
 
   전공 팩 예시
   ─────────
-    /add-pack medical      의료·약학  (PubMed, 임상시험, OpenFDA)
-    /add-pack finance      금융·시계열
-    /add-pack libsci       문헌정보·계량서지
-    /add-pack ocean        해양·환경
-    /add-pack industrial   산업공학·최적화
-    /add-pack korea        한국 공공데이터
-    /add-pack new <분야>    목록에 없는 전공이면 새로 만들기
+    /potato-add-pack medical      의료·약학  (PubMed, 임상시험, OpenFDA)
+    /potato-add-pack finance      금융·시계열
+    /potato-add-pack libsci       문헌정보·계량서지
+    /potato-add-pack ocean        해양·환경
+    /potato-add-pack industrial   산업공학·최적화
+    /potato-add-pack korea        한국 공공데이터
+    /potato-add-pack new <분야>    목록에 없는 전공이면 새로 만들기
 ────────────────────────────────────────────────────────────
 "@ -ForegroundColor White

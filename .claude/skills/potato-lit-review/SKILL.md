@@ -1,14 +1,14 @@
 ---
-name: lit-review
+name: potato-lit-review
 description: 논문·근거를 조사해 정리 노트를 만든다. 새 주제를 시작할 때, 방법론의 근거가 필요할 때, 연구 공백을 찾을 때 사용한다. "논문 찾아줘", "선행연구 조사해줘" 같은 요청에 사용.
 ---
 
-# /lit-review — 문헌 조사
+# /potato-lit-review — 문헌 조사
 
 ```
-/lit-review 아스피린 약물상호작용
-/lit-review 시계열 이상탐지 딥러닝. 최근 3년 위주로
-/lit-review 청년 주거이동 결정요인. 국내 논문도 포함해서
+/potato-lit-review 아스피린 약물상호작용
+/potato-lit-review 시계열 이상탐지 딥러닝. 최근 3년 위주로
+/potato-lit-review 청년 주거이동 결정요인. 국내 논문도 포함해서
 ```
 
 ## 절차
@@ -81,6 +81,6 @@ description: 논문·근거를 조사해 정리 노트를 만든다. 새 주제�
 
 ## 다음 단계
 
-- 방향이 정해졌다 → `/experiment`
-- 논문을 재현하고 싶다 → `/reproduce`
-- 데이터가 필요하다 → `/find-data`
+- 방향이 정해졌다 → `/potato-experiment`
+- 논문을 재현하고 싶다 → `/potato-reproduce`
+- 데이터가 필요하다 → `/potato-find-data`

@@ -1,17 +1,17 @@
 ---
-name: experiment
+name: potato-experiment
 description: 전처리부터 모델 비교, 방법론 감사, 결과 종합까지 실험 한 사이클을 돌린다. EDA가 끝나고 실제로 모델을 만들 때 사용한다. "모델 만들어줘", "실험 돌려줘" 같은 요청에 사용.
 ---
 
-# /experiment — 실험 한 사이클
+# /potato-experiment — 실험 한 사이클
 
 전처리 → 모델 비교 → **감사** → 종합. 감사가 이 스킬의 핵심이다.
 점수를 올리는 것보다 **틀린 결과를 내지 않는 것**이 먼저다.
 
 ```
-/experiment
-/experiment 시계열이야. 워크포워드로 검증해줘
-/experiment 빠르게. 해커톤 중이라 시간 없어
+/potato-experiment
+/potato-experiment 시계열이야. 워크포워드로 검증해줘
+/potato-experiment 빠르게. 해커톤 중이라 시간 없어
 ```
 
 ## 절차
@@ -19,7 +19,7 @@ description: 전처리부터 모델 비교, 방법론 감사, 결과 종합까�
 ### 0. 준비 확인
 
 - `results.md`가 있으면 읽는다 — 이미 한 것을 반복하지 않기 위해
-- EDA를 안 했으면 먼저 `/eda`를 권한다. 데이터를 모르고 모델부터 만들면
+- EDA를 안 했으면 먼저 `/potato-eda`를 권한다. 데이터를 모르고 모델부터 만들면
   대부분 시간 낭비가 된다
 - 데이터 성격(일반/시계열/공간/개체반복)을 확인한다 → 검증 설계가 여기서 갈린다
 
@@ -163,10 +163,10 @@ methods-reviewer 로 지금까지의 전처리·검증·평가를 감사해줘.
 
 ## 다음 단계
 
-- 경진대회 → `/submit`
-- 보고서 → `/report`
-- 발표 → `/slides`
-- 감사에서 major가 나왔다 → 고치고 다시 `/experiment`
+- 경진대회 → `/potato-submit`
+- 보고서 → `/potato-report`
+- 발표 → `/potato-slides`
+- 감사에서 major가 나왔다 → 고치고 다시 `/potato-experiment`
 
 ## 속도 우선 모드 (해커톤)
 

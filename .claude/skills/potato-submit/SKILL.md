@@ -1,14 +1,14 @@
 ---
-name: submit
+name: potato-submit
 description: 경진대회 제출 파일을 만들고 개선 루프를 관리한다. 캐글·데이콘 참가 중일 때 사용한다. "제출 파일 만들어줘", "점수 올려줘" 같은 요청에 사용.
 ---
 
-# /submit — 경진대회 제출
+# /potato-submit — 경진대회 제출
 
 ```
-/submit
-/submit XGBoost 모델로
-/submit 점수 0.847 나왔어. 다음에 뭘 해볼까
+/potato-submit
+/potato-submit XGBoost 모델로
+/potato-submit 점수 0.847 나왔어. 다음에 뭘 해볼까
 ```
 
 ## 절차
@@ -82,7 +82,7 @@ sub.to_csv(f'submissions/sub_{tag}.csv', index=False, encoding='utf-8-sig')
 
 1. **데이터 누수** — 검증 설계 오류. `methods-reviewer` 호출
 2. **CV 과적합** — 같은 폴드로 너무 여러 번 튜닝했다
-3. **train/test 분포 차이** — `/eda`의 분포 비교로 확인
+3. **train/test 분포 차이** — `/potato-eda`의 분포 비교로 확인
 
 이 셋을 해결하지 않고 점수를 올리는 것은 모래 위에 쌓는 것이다.
 

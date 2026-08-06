@@ -1,14 +1,14 @@
 ---
-name: reproduce
+name: potato-reproduce
 description: 논문과 저자 코드를 재현하고 내 데이터에 적용한다. 랩실에서 "이 논문 우리 데이터에 적용해봐"라는 과제를 받았을 때 사용한다. "이 논문 재현해줘", "저자 코드 돌려줘" 같은 요청에 사용.
 ---
 
-# /reproduce — 논문 재현하고 확장하기
+# /potato-reproduce — 논문 재현하고 확장하기
 
 ```
-/reproduce papers/xxx.pdf
-/reproduce arXiv:2401.12345
-/reproduce <논문 제목> — 저자 깃허브도 찾아줘
+/potato-reproduce papers/xxx.pdf
+/potato-reproduce arXiv:2401.12345
+/potato-reproduce <논문 제목> — 저자 깃허브도 찾아줘
 ```
 
 ## 이 스킬의 목표
@@ -24,7 +24,7 @@ description: 논문과 저자 코드를 재현하고 내 데이터에 적용한�
 ### 1. 논문 이해
 
 논문이 PDF면 읽고, DOI/arXiv ID면 받아온다.
-`/lit-review`를 먼저 돌려 지형을 파악해두면 좋지만 필수는 아니다.
+`/potato-lit-review`를 먼저 돌려 지형을 파악해두면 좋지만 필수는 아니다.
 
 **정리할 것** (`notes/repro-<논문>.md`):
 - 핵심 주장 한 문단
@@ -199,6 +199,6 @@ adapters/
 
 ## 다음 단계
 
-- 확장 실험 → `/experiment`
-- 결과 정리 → `/report`
-- 랩미팅 → `/slides`
+- 확장 실험 → `/potato-experiment`
+- 결과 정리 → `/potato-report`
+- 랩미팅 → `/potato-slides`

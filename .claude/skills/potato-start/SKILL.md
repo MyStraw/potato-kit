@@ -1,19 +1,19 @@
 ---
-name: start
+name: potato-start
 description: 현재 폴더를 potato-kit 연구 프로젝트로 초기화한다. 새 연구를 시작할 때, 또는 기존 폴더에 킷 규칙을 적용하고 싶을 때 사용한다. "연구 시작할게", "이 폴더 세팅해줘", "프로젝트 만들어줘" 같은 요청에 사용.
 ---
 
-# /start — 연구 프로젝트 시작
+# /potato-start — 연구 프로젝트 시작
 
 ```
-/start
-/start 부산 청년 주거 분석
-/start 해커톤. 의료 데이터. 이틀 남음
+/potato-start
+/potato-start 부산 청년 주거 분석
+/potato-start 해커톤. 의료 데이터. 이틀 남음
 ```
 
 **이 스킬이 필요한 이유**: 스킬·에이전트·팩은 유저 스코프라 어디서든 동작하지만,
 **운영 규칙(`CLAUDE.md`)은 폴더에 있어야 적용된다.** Claude Code는 현재 폴더와
-상위 폴더의 `CLAUDE.md`만 자동으로 읽는다. `/start`가 그걸 놓아준다.
+상위 폴더의 `CLAUDE.md`만 자동으로 읽는다. `/potato-start`가 그걸 놓아준다.
 
 ---
 
@@ -97,7 +97,7 @@ ls CLAUDE.md plan.md data/ 2>/dev/null
 
 ```
 주제를 보니 medical 팩이 맞을 것 같습니다. 켤까요?
-  /add-pack medical  → PubMed·임상시험·유전자변이·OpenFDA
+  /potato-add-pack medical  → PubMed·임상시험·유전자변이·OpenFDA
 ```
 
 ### 7. 다음 단계를 안내한다
@@ -106,11 +106,11 @@ ls CLAUDE.md plan.md data/ 2>/dev/null
 
 | 상황 | 다음 |
 | --- | --- |
-| 데이터가 없다 | `/find-data <주제>` |
-| 데이터를 방금 받았다 | `/eda data/raw/<파일>` |
-| 논문부터 봐야 한다 | `/lit-review <주제>` |
-| 재현할 논문이 있다 | `/reproduce <논문>` |
-| 최적화 문제다 | `/optimize` |
+| 데이터가 없다 | `/potato-find-data <주제>` |
+| 데이터를 방금 받았다 | `/potato-eda data/raw/<파일>` |
+| 논문부터 봐야 한다 | `/potato-lit-review <주제>` |
+| 재현할 논문이 있다 | `/potato-reproduce <논문>` |
+| 최적화 문제다 | `/potato-optimize` |
 
 ---
 
@@ -128,7 +128,7 @@ ls CLAUDE.md plan.md data/ 2>/dev/null
   data/raw, data/processed, notebooks, reports/figs
   .gitignore
 
-**바로 다음**: 데이터가 아직 없으니 `/find-data 부산 청년 주거` 부터 시작하시죠.
+**바로 다음**: 데이터가 아직 없으니 `/potato-find-data 부산 청년 주거` 부터 시작하시죠.
 ```
 
 ---

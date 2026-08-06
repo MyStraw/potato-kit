@@ -1,14 +1,14 @@
 ---
-name: optimize
+name: potato-optimize
 description: 최적화·시뮬레이션 문제를 정식화하고 푼다. 스케줄링, 경로, 배치, 대기행렬, 공급망 문제에 사용한다. "최적화해줘", "스케줄 짜줘", "시뮬레이션 돌려줘" 같은 요청에 사용.
 ---
 
-# /optimize — 최적화·시뮬레이션
+# /potato-optimize — 최적화·시뮬레이션
 
 ```
-/optimize 배송 차량 5대로 40개 지점 도는 경로
-/optimize 3교대 간호사 근무표. 제약 조건은 ...
-/optimize 창구 몇 개면 대기시간 5분 이하가 되나
+/potato-optimize 배송 차량 5대로 40개 지점 도는 경로
+/potato-optimize 3교대 간호사 근무표. 제약 조건은 ...
+/potato-optimize 창구 몇 개면 대기시간 5분 이하가 되나
 ```
 
 ## 이 스킬의 원칙
@@ -164,10 +164,10 @@ for perturbation in [0.9, 0.95, 1.0, 1.05, 1.1]:
 
 ## 데이터가 필요하면
 
-`/find-data` 또는 `korea` 팩 참조.
+`/potato-find-data` 또는 `korea` 팩 참조.
 기업 내부 데이터라면 `CLAUDE.md`의 데이터 보호 규칙이 적용된다.
 
 ## 다음 단계
 
-- 결과 정리 → `/report`
-- 보고 → `/slides`
+- 결과 정리 → `/potato-report`
+- 보고 → `/potato-slides`

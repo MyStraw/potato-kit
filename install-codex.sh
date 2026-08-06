@@ -102,18 +102,18 @@ Codex 에는 슬래시 스킬이 없다. 대신 **아래 파일을 직접 읽고
 
 | 사용자가 이렇게 말하면 | 읽을 파일 |
 | --- | --- |
-| "연구 시작", "처음부터 끝까지", 뭘 할지 모를 때 | \`$KIT_DIR/.claude/skills/research/SKILL.md\` |
-| "이 폴더 세팅", "프로젝트 만들어줘" | \`$KIT_DIR/.claude/skills/start/SKILL.md\` |
-| "논문 찾아줘", "선행연구" | \`$KIT_DIR/.claude/skills/lit-review/SKILL.md\` |
-| "데이터 어디서 구하지", "데이터 찾아줘" | \`$KIT_DIR/.claude/skills/find-data/SKILL.md\` |
-| "이 데이터 봐줘", "EDA" | \`$KIT_DIR/.claude/skills/eda/SKILL.md\` |
-| "모델 만들어줘", "실험 돌려줘" | \`$KIT_DIR/.claude/skills/experiment/SKILL.md\` |
-| "이 논문 재현해줘" | \`$KIT_DIR/.claude/skills/reproduce/SKILL.md\` |
-| "최적화", "스케줄 짜줘" | \`$KIT_DIR/.claude/skills/optimize/SKILL.md\` |
-| "보고서 써줘", "결과 정리" | \`$KIT_DIR/.claude/skills/report/SKILL.md\` |
-| "발표자료", "PPT" | \`$KIT_DIR/.claude/skills/slides/SKILL.md\` |
-| "제출 파일", 경진대회 | \`$KIT_DIR/.claude/skills/submit/SKILL.md\` |
-| "팩 켜줘", "무슨 팩 있어" | \`$KIT_DIR/.claude/skills/add-pack/SKILL.md\` |
+| "연구 시작", "처음부터 끝까지", 뭘 할지 모를 때 | \`$KIT_DIR/.claude/skills/potato-research/SKILL.md\` |
+| "이 폴더 세팅", "프로젝트 만들어줘" | \`$KIT_DIR/.claude/skills/potato-start/SKILL.md\` |
+| "논문 찾아줘", "선행연구" | \`$KIT_DIR/.claude/skills/potato-lit-review/SKILL.md\` |
+| "데이터 어디서 구하지", "데이터 찾아줘" | \`$KIT_DIR/.claude/skills/potato-find-data/SKILL.md\` |
+| "이 데이터 봐줘", "EDA" | \`$KIT_DIR/.claude/skills/potato-eda/SKILL.md\` |
+| "모델 만들어줘", "실험 돌려줘" | \`$KIT_DIR/.claude/skills/potato-experiment/SKILL.md\` |
+| "이 논문 재현해줘" | \`$KIT_DIR/.claude/skills/potato-reproduce/SKILL.md\` |
+| "최적화", "스케줄 짜줘" | \`$KIT_DIR/.claude/skills/potato-optimize/SKILL.md\` |
+| "보고서 써줘", "결과 정리" | \`$KIT_DIR/.claude/skills/potato-report/SKILL.md\` |
+| "발표자료", "PPT" | \`$KIT_DIR/.claude/skills/potato-slides/SKILL.md\` |
+| "제출 파일", 경진대회 | \`$KIT_DIR/.claude/skills/potato-submit/SKILL.md\` |
+| "팩 켜줘", "무슨 팩 있어" | \`$KIT_DIR/.claude/skills/potato-add-pack/SKILL.md\` |
 
 **주의**: 스킬 문서에 \`claude mcp add\` 가 나오면 \`codex mcp add\` 로 바꿔 실행한다.
 문법은 같다 (\`codex mcp add <이름> -- <명령>\`).
@@ -161,7 +161,7 @@ cat <<EOF
     > 연구 시작할게. 무엇부터 하면 될지 물어봐줘
 
   ⚠️  Claude Code 판과의 차이
-    · 슬래시 명령(/research 등)이 없다 → 말로 요청하면 AGENTS.md 가 라우팅한다
+    · 슬래시 명령(/potato-research 등)이 없다 → 말로 요청하면 AGENTS.md 가 라우팅한다
     · 서브에이전트가 없다 → 역할 파일을 읽고 직접 수행한다
     · 감사는 새 세션에서 돌리는 것을 권한다 (확증 편향 방지)
 

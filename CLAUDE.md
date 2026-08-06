@@ -21,12 +21,12 @@
 기본 흐름은 여섯 단계다. 전부 거칠 필요는 없고, 필요한 데서 시작하면 된다.
 
 ```
-0. 데이터 발굴   /find-data     ← 데이터가 아직 없을 때만
-1. 문헌·근거     /lit-review
-2. 탐색          /eda
-3. 실험          /experiment
+0. 데이터 발굴   /potato-find-data     ← 데이터가 아직 없을 때만
+1. 문헌·근거     /potato-lit-review
+2. 탐색          /potato-eda
+3. 실험          /potato-experiment
 4. 감사          methods-reviewer  ← 3에 포함되지만 따로 부를 수도 있다
-5. 산출물        /report  /slides  /submit
+5. 산출물        /potato-report  /potato-slides  /potato-submit
 ```
 
 **단계마다 무엇을 남기나**
@@ -103,7 +103,7 @@
 **산출물은 마크다운이 기본이다.** PDF·PPTX는 묻지 않고 만들지 않는다.
 `.md`를 먼저 만들어 보여주고 — "논문 형식 PDF로 만들까요? 발표용 PPTX로
 만들까요? 아니면 md로 충분한가요?" — **대답을 받은 뒤에** 변환한다.
-사용자가 처음부터 형식을 지정했으면(`/report PDF로`) 다시 묻지 않는다.
+사용자가 처음부터 형식을 지정했으면(`/potato-report PDF로`) 다시 묻지 않는다.
 
 이유: 변환은 의존성(pandoc·LaTeX·python-pptx)과 시간을 잡아먹는데,
 실제로 필요한 경우는 절반도 안 된다.

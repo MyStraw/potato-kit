@@ -33,7 +33,7 @@ iacr · openaire · citeseerx · base · google_scholar · unpaywall
 
 ## 추가 MCP 서버 (선택)
 
-> ⚠️ 아래는 미검증이다. `/add-pack libsci`가 설치 전에 확인한다.
+> ⚠️ 아래는 미검증이다. `/potato-add-pack libsci`가 설치 전에 확인한다.
 > **대부분의 경우 필요 없다** — 위 `paper-search`로 먼저 해보고, 부족할 때만 검토하자.
 
 ### OpenAlex MCP ⚠️미검증
@@ -83,7 +83,7 @@ conda run -n potato pip install bertopic pyvis
            - 키워드 동시출현 (co-word analysis)
            - 토픽 모델링 (주제 클러스터의 시간적 변화)
 4. 해석    연구 공백, 신흥 주제, 학제 간 연결이 끊긴 지점
-5. 보고    /report
+5. 보고    /potato-report
 ```
 
 ## 감사 체크리스트
