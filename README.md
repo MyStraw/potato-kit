@@ -75,13 +75,16 @@ potato-kit은 그 반복을 없앱니다. 한 번 설치하면:
 ## 🚀 설치 (5분)
 
 <details open>
-<summary><b>Windows</b> (PowerShell)</summary>
+<summary><b>Windows</b> (PowerShell · VS Code 터미널 · Anaconda Prompt — 아무거나)</summary>
 
 ```powershell
 git clone https://github.com/MyStraw/potato-kit.git
 cd potato-kit
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
+
+> `conda` 를 못 찾는다는 오류가 나면 스크립트가 해결 방법을 알려줍니다.
+> 미리 보려면 [터미널 여는 법](#-claude-code를-한-번도-안-써봤다면) 절을 참고하세요.
 </details>
 
 <details>
@@ -174,12 +177,52 @@ claude mcp list     # paper-search 가 보이면 성공
 <details open>
 <summary><b>2. 터미널 여는 법</b></summary>
 
-**Windows**: 시작 버튼 → `Anaconda Prompt` 검색 → 클릭
-> 일반 명령 프롬프트가 아니라 **Anaconda Prompt** 여야 합니다. `conda` 명령이 거기서만 잡혀요.
+아무 터미널이나 됩니다. 편한 걸 쓰세요.
 
-**macOS**: `Cmd + Space` → `터미널` 입력 → 엔터
+| | 여는 법 |
+| :-- | :-- |
+| **VS Code** (추천) | VS Code 실행 → 폴더 열기 → `Ctrl + \`` (백틱) |
+| **Windows PowerShell** | 시작 버튼 → `PowerShell` 검색 |
+| **Anaconda Prompt** | 시작 버튼 → `Anaconda Prompt` 검색 |
+| **macOS** | `Cmd + Space` → `터미널` |
 
-검은 창이 뜨고 커서가 깜빡이면 성공입니다. 여기에 명령을 **타이핑하고 엔터**를 칩니다.
+커서가 깜빡이면 성공입니다. 여기에 명령을 **타이핑하고 엔터**를 칩니다.
+
+### ⚠️ 먼저 이것부터 확인하세요
+
+```bash
+conda --version
+```
+
+`conda 25.x.x` 처럼 버전이 나오면 **그대로 진행하면 됩니다.**
+
+`'conda'은(는) 내부 또는 외부 명령... 이 아닙니다` 라고 나오면 — conda가 이 터미널에
+등록되지 않은 것뿐입니다. **한 번만** 아래를 하면 이후로는 계속 됩니다.
+
+<details>
+<summary>Windows에서 conda 를 못 찾을 때 (펼치기)</summary>
+
+**1단계** — PowerShell을 **관리자 권한으로** 열고 한 번 실행:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+PowerShell이 시작 스크립트를 읽도록 허용하는 설정입니다. `Y` 를 눌러 확인하세요.
+(이걸 안 하면 다음 단계를 해도 conda가 계속 안 잡힙니다 — 가장 흔한 원인입니다)
+
+**2단계** — 시작 버튼 → `Anaconda Prompt` 를 열고:
+```
+conda init powershell
+```
+
+**3단계** — 터미널을 **완전히 닫았다가** 다시 엽니다.
+VS Code를 쓴다면 VS Code 자체를 껐다 켜세요.
+
+이제 PowerShell·VS Code 터미널 어디서든 `conda --version` 이 됩니다.
+
+> 그래도 안 되면 그냥 **Anaconda Prompt** 에서 작업하세요. 기능은 똑같습니다.
+> (Anaconda Prompt = conda가 미리 켜져 있는 명령 프롬프트)
+
+</details>
 
 </details>
 
@@ -655,6 +698,25 @@ Windows는 `Malgun Gothic`, macOS는 `AppleGothic`, Linux는 `NanumGothic`.
 - 한도가 임박하면: **결과 생성 > 정리 > 탐색** 순으로
 
 자세한 건 [`CLAUDE.md`](./CLAUDE.md)의 "사용량 아끼기" 절에 있습니다.
+</details>
+
+<details>
+<summary><b>Windows에서 conda 명령을 못 찾아요 (VS Code·PowerShell)</b></summary>
+
+conda 설치 시 PATH 등록을 안 했거나, PowerShell 프로필이 차단된 경우입니다.
+**한 번만** 아래를 하면 이후 계속 됩니다.
+
+```powershell
+# 1) 관리자 PowerShell 에서 (이걸 빼먹으면 2번을 해도 안 됩니다)
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+# 2) Anaconda Prompt 에서
+conda init powershell
+
+# 3) 터미널 완전히 닫았다 다시 열기 (VS Code 는 VS Code 재시작)
+```
+
+그래도 안 되면 **Anaconda Prompt** 에서 작업하세요. 기능은 똑같습니다.
 </details>
 
 <details>

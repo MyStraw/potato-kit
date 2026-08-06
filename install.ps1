@@ -26,17 +26,25 @@ if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
 OK "Claude Code 확인됨"
 
 if (-not (Get-Command conda -ErrorAction SilentlyContinue)) {
-    Fail "conda가 없습니다."
+    Fail "이 터미널에서 conda 를 찾을 수 없습니다."
     Write-Host ""
-    Write-Host "  Miniconda를 설치하세요:"
-    Write-Host "    winget install Anaconda.Miniconda3"
-    Write-Host "  또는 https://docs.conda.io/en/latest/miniconda.html"
+    Write-Host "  [A] conda 를 아직 설치하지 않았다면" -ForegroundColor Cyan
+    Write-Host "      winget install Anaconda.Miniconda3"
+    Write-Host "      또는 https://docs.conda.io/en/latest/miniconda.html"
     Write-Host ""
-    Write-Host "  설치 후 '<Anaconda Prompt>' 를 새로 열고 다시 실행하세요."
-    Write-Host "  (일반 PowerShell에서 conda가 안 잡히면 'conda init powershell' 실행)"
+    Write-Host "  [B] 설치는 했는데 PowerShell/VS Code 에서 안 잡히는 경우 (가장 흔함)" -ForegroundColor Cyan
+    Write-Host "      1) 관리자 PowerShell 에서 한 번:"
+    Write-Host "         Set-ExecutionPolicy -Scope CurrentUser RemoteSigned"
+    Write-Host "         ^ 이걸 빼먹으면 아래를 해도 계속 안 잡힙니다"
+    Write-Host "      2) Anaconda Prompt 를 열고:"
+    Write-Host "         conda init powershell"
+    Write-Host "      3) 터미널을 완전히 닫았다 다시 열기 (VS Code 는 VS Code 자체를 재시작)"
+    Write-Host ""
+    Write-Host "  [C] 급하면 그냥 'Anaconda Prompt' 에서 이 스크립트를 실행하세요." -ForegroundColor Cyan
+    Write-Host "      기능은 동일합니다."
     exit 1
 }
-OK "conda 확인됨"
+OK "conda 확인됨 ($(conda --version 2>$null))"
 
 # ---------------------------------------------------------------- 2. 환경 생성
 Say "2/5 conda 환경 준비"
