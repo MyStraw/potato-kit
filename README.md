@@ -98,28 +98,32 @@ bash install.sh
 </details>
 
 <details>
-<summary><b>Codex CLI 를 쓴다면</b> (ChatGPT 구독)</summary>
+<summary><b>Codex 앱·CLI를 쓴다면</b> (ChatGPT 구독)</summary>
 
 ```bash
 bash install-codex.sh                                          # macOS/Linux
 powershell -ExecutionPolicy Bypass -File .\install-codex.ps1    # Windows
 ```
 
-Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표를 먼저 보세요.
+Codex 설치기는 현재 Codex 구조에 맞춰 자산을 네이티브 형식으로 변환합니다.
 
-| | Claude Code | Codex CLI |
+| | Claude Code | Codex 앱·CLI |
 | :-- | :-: | :-- |
 | 운영 규칙 | `CLAUDE.md` ✅ | `AGENTS.md` ✅ 자동 생성 |
 | MCP 서버 | ✅ | ✅ `codex mcp add` |
-| 슬래시 명령 (`/potato-research` 등) | ✅ 13종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
-| 서브에이전트 4종 | ✅ 자동 위임 | ❌ → 역할 파일을 읽고 직접 수행 |
+| 스킬 13종 | `/potato-research` 등 | `$potato-research` 또는 자연어 요청 |
+| 전용 에이전트 4종 | ✅ | ✅ Codex 사용자 에이전트로 변환 |
+| 상태줄 | potato 상태줄 스크립트 | Codex 내장 `/statusline` 사용 |
 
-절차 자체는 같습니다. Codex 도 파일을 읽을 수 있으므로,
-`"이 데이터 EDA 해줘"` 라고 하면 AGENTS.md 가 `.claude/skills/potato-eda/SKILL.md` 를
-읽으라고 지시하고 같은 절차를 따릅니다.
+설치 후 Codex를 다시 시작하세요. CLI에서는 `$potato-eda`처럼 스킬을 직접 부르거나
+`"이 데이터 EDA 해줘"`라고 자연어로 요청할 수 있습니다. Codex는 설명이 일치하는
+스킬을 자동으로 선택합니다.
 
-> 💡 **감사는 새 Codex 세션에서 돌리세요.** 서브에이전트가 없어 같은 대화에서
-> 자기 코드를 감사하게 되는데, 그러면 확증 편향이 생깁니다.
+기준 문서: [Codex 스킬](https://learn.chatgpt.com/docs/build-skills) ·
+[Codex 서브에이전트](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+
+> 💡 **감사는 `methods-reviewer` 에이전트에 위임하세요.** 구현 맥락과 감사 맥락을
+> 분리해 확증 편향을 줄일 수 있습니다.
 
 </details>
 
@@ -129,6 +133,7 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 | :-- | :-- | :-- |
 | **Claude Code** | `claude --version` | [설치 안내](https://claude.com/product/claude-code) |
 | **Claude 구독** | `claude` → `/login` | Pro면 충분합니다 |
+| **Codex** *(Codex 설치 시)* | `codex --version` | `npm i -g @openai/codex` |
 | **Python** (Anaconda/Miniconda) | `conda --version` | 설치 스크립트가 안내합니다 |
 | Node.js *(선택)* | `node --version` | 일부 MCP에만 필요 |
 
@@ -146,6 +151,10 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 
 > 💡 **유저 스코프로 설치되므로 어느 폴더에서든 동작합니다.**
 > 킷 폴더 안에서만 쓸 수 있는 게 아닙니다.
+
+Codex 설치기는 스킬을 `~/.agents/skills`, 사용자 에이전트를 `~/.codex/agents`,
+팩과 공통 규칙을 `~/.codex/potato-kit`에 설치합니다. 기존 `AGENTS.md`의 사용자 작성
+부분은 보존하고 potato-kit 관리 블록만 갱신합니다.
 
 ### 확인
 
@@ -669,7 +678,9 @@ potato-kit/
 ├── GUIDE.md                  ★ 페르소나별 사용법 — 먼저 읽으세요
 ├── CLAUDE.md                 연구 운영 규칙 (프로젝트에 상속)
 ├── install.sh / install.ps1  설치 (Claude Code)
-├── install-codex.sh / .ps1   설치 (Codex CLI 용)
+├── install-codex.sh / .ps1   설치 (Codex 앱·CLI용)
+├── scripts/
+│   └── install_codex_assets.py  Codex 스킬·에이전트 변환기
 ├── start-jupyter.sh / .ps1   주피터 + MCP 연결
 ├── LICENSE                   MIT
 ├── .claude/
@@ -758,9 +769,12 @@ conda init powershell
 <details>
 <summary><b>Codex 에서 스킬이 안 먹혀요</b></summary>
 
-Codex 에는 슬래시 명령이 없습니다. `"이 데이터 EDA 해줘"` 처럼 **말로** 요청하면
-`~/.codex/AGENTS.md` 가 해당 스킬 파일을 읽으라고 라우팅합니다.
-AGENTS.md 가 없다면 `bash install-codex.sh` 를 돌리세요.
+설치 후 Codex 앱·CLI를 완전히 다시 시작하세요. CLI에서 `/skills`로 목록을 확인하고
+`$potato-eda`처럼 직접 부르거나 `"이 데이터 EDA 해줘"`처럼 말로 요청할 수 있습니다.
+
+그래도 보이지 않으면 `~/.agents/skills/potato-eda/SKILL.md`가 있는지 확인하고
+`install-codex.sh` 또는 `install-codex.ps1`을 다시 실행하세요. 재설치는 기존
+`AGENTS.md`의 사용자 작성 부분을 보존합니다.
 </details>
 
 <details>
