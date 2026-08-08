@@ -1,0 +1,161 @@
+---
+name: potato-study-paper
+description: PDF 논문을 처음부터 끝까지 같이 정독한다. 원문을 인용하고 번역·해설을 붙이고, 수식은 KaTeX로, 그림은 원문에서 오려서 브라우저로 계속 자라나는 HTML 학습 노트를 만든다. 논문 한 편을 깊게 이해하고 싶을 때, 영어·수식·시계열처럼 낯선 부분을 짚어가며 읽고 싶을 때 사용한다. "이 논문 같이 읽어줘", "논문 정독하고 싶어", "수식 설명해가면서 읽자", "그림 하나씩 설명해줘" 같은 요청에 사용.
+---
+
+# /potato-study-paper — 논문 정독 동반자
+
+```
+/potato-study-paper papers/cafo.pdf
+/potato-study-paper arXiv:2406.01833 처음부터 같이 읽자
+/potato-study-paper papers/xxx.pdf 수식이랑 시계열 부분 자세히 짚어가면서
+```
+
+## 이 스킬이 다른 스킬과 다른 점
+
+| 스킬 | 범위 | 산출물 |
+| --- | --- | --- |
+| `/potato-lit-review` | 논문 여러 편, 넓게 훑기 | 비교·종합 정리 노트 |
+| `/potato-reproduce` | 논문 한 편, 코드로 재현 | 재현 리포트 + 코드 |
+| **`/potato-study-paper`** | **논문 한 편, 처음부터 끝까지 정독** | **계속 자라나는 HTML 학습 노트** |
+
+터미널 텍스트로 수식·표를 읽는 건 고역이다. 이 스킬은 대화창에 설명을 쏟아붓는 대신,
+**브라우저에서 새로고침만 하면 되는 로컬 HTML 문서**에 설명을 쌓아간다. 매 구간이
+끝나면 대화창 응답은 "설명 업데이트했습니다" 한 줄이면 충분하다 — 실제 내용은
+파일에 있다.
+
+## 산출물
+
+```
+notes/study-<논문 슬러그>/
+├── index.html        ← 본문. 세션이 이어질 때마다 계속 갱신
+├── style.css          ← 공통 스타일. 최초 1회 example/style.css 를 복사해서 시작
+├── images/             ← 원문에서 오려낸 그림 (pdftoppm + ffmpeg)
+└── figure<N>.html     ← 그림 하나를 낱개로 뜯어 설명해야 할 때만 추가
+```
+
+프로젝트 폴더가 아니라 다른 위치(예: 개인 옵시디언 볼트)에 만들어달라고
+명시하면 그 경로를 그대로 쓴다 — 이 스킬은 저장 위치를 가리지 않는다.
+
+## 절차
+
+### 1. 논문 확보 + 분량 파악
+
+PDF면 그대로, arXiv ID/DOI면 받아온다. 페이지 수부터 확인한다 — 정독 페이스를
+잡는 데 필요하다:
+
+```bash
+pdfinfo papers/xxx.pdf | grep Pages     # poppler. 없으면: brew install poppler / apt install poppler-utils
+```
+
+같은 논문의 버전이 여러 개(학회판·arXiv판 등) 있으면 **먼저 사용자에게 어느 걸로
+읽을지 묻는다** — 페이지 수·부록 포함 여부가 다르면 진도 체감이 달라진다.
+
+### 2. 뼈대 만들기 (최초 1회)
+
+`example/style.css`를 그대로 복사해서 시작한다 — 라이트/다크 모드 자동 대응,
+`quote`/`explain`/`example`/`panel` 네 가지 박스 스타일, sticky 목차가 이미 갖춰져
+있다.
+
+`index.html` 헤드에는 KaTeX를 CDN으로 붙인다. 로컬 파일이라 Artifact 도구와 달리
+CSP 제약이 없어서 외부 CDN을 그냥 쓸 수 있다:
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]
+  });"></script>
+<link rel="stylesheet" href="style.css">
+```
+
+왼쪽에 sticky 목차(`nav#toc`)를 두고, 각 링크에 진행 상태 클래스를 단다 —
+`status-done`(✅) / `status-next`(▶️) / `status-todo`(흐리게). 구간을 진행할 때마다
+이 클래스를 갱신한다. `example/index.html`을 보면 실제 구조를 그대로 볼 수 있다.
+
+가능하면 최초 1회는 파일을 만든 뒤 직접 열어 보여준다 (`open notes/study-.../index.html`,
+Windows·Linux처럼 `open`이 없으면 경로만 안내). 이후로는 사용자가 새로고침한다.
+
+### 3. 첫 줄부터 순서대로 — 앞질러 가지 않는다
+
+**한 번에 한 구간만.** 사용자가 "다음", "계속", "그러자" 라고 확인하기 전까지
+다음 절로 넘어가지 않는다. 정독은 속도가 아니라 이해가 목적이다.
+
+구간 하나마다 이 패턴을 반복한다:
+
+```html
+<div class="quote en">
+  <div class="label">원문</div>
+  (원문 그대로. 의역·요약 금지 — 나중에 원문과 대조할 수 있어야 한다)
+</div>
+<div class="explain">
+  <div class="label">번역 · 해설</div>
+  (정확한 번역) + (필요하면 배경지식, 수식 전개, 왜 이게 중요한지)
+</div>
+```
+
+- 수식은 `$$...$$`(독립된 줄) / `$...$`(문장 안)로 KaTeX에 맡긴다. 기호마다 뜻을
+  `symbol-table` 표로 짚는다.
+- 처음 보는 개념(시계열 정상성, QR분해, 어텐션 메커니즘 등)이 나오면 원문에 없어도
+  `.explain` 박스에 배경지식을 보충한다 — 단 "원문이 말한 것"과 "보충 설명"은
+  라벨(`원문` vs `번역 · 해설`)로 항상 분리한다. 섞어서 원문처럼 보이게 쓰지 않는다.
+- 손으로 따라갈 수 있는 작은 토이 예시가 이해에 도움이 되면 `.example` 박스로
+  추가한다 (숫자를 직접 넣어 계산해 보이는 식).
+
+### 4. 그림은 원문에서 직접 오려낸다
+
+텍스트 설명만으로는 구조도·플롯을 이해시키기 어렵다. 페이지를 이미지로 렌더링하고
+필요하면 서브그림 단위로 자른다.
+
+```bash
+pdftoppm -png -r 220 -f <페이지> -l <페이지> papers/xxx.pdf notes/study-xxx/images/page
+# 서브그림(예: Figure 1의 A/B/C)을 나누려면 ffmpeg crop 으로 좌표를 잘라낸다
+ffmpeg -y -i page-02.png -vf "crop=W:H:X:Y" images/fig1-A.png
+```
+
+크롭 좌표는 한 번에 안 맞는다. **Read 도구로 원본 페이지 이미지를 먼저 눈으로
+보고** 대략 비율을 잡은 뒤 크롭 → **Read로 잘린 결과를 다시 확인** → 어긋나면
+좌표를 조정, 이 사이클을 1~2번 반복한다. `sips`(macOS)는 중앙 크롭만 되므로
+임의 좌표 크롭에는 `ffmpeg`의 `crop` 필터를 쓴다.
+
+그림 하나가 여러 서브파트(A/B/C 등)로 나뉘고 각 파트를 자세히 설명해야 하면,
+본문에 다 우겨넣지 말고 **`figure<N>.html`로 분리**하고 본문에서 링크로 연결한다
+(`example/figure1.html`이 그 형태를 보여준다). 이때 아직 본문에서 안 읽은 뒷부분
+수식(그림에 이미 나와 있는 방법론 등)이 필요하면, **먼저 해당 페이지를 읽어서
+정확한 수식을 확보한 뒤** 설명을 쓴다 — 그림만 보고 수식을 추측해서 쓰지 않는다.
+
+### 5. 매 업데이트 후
+
+파일만 갱신하고, 대화창에는 **"설명 업데이트 했습니다"** + 무엇을 추가했는지 한
+줄 요약만 남긴다. 수식·번역 전체를 대화창에 다시 쓰지 않는다 — 그러면 이 스킬을
+쓰는 이유가 없어진다.
+
+섹션이 많은 논문이면 `TaskCreate`로 남은 절을 태스크로 등록해두면 여러 세션에
+걸쳐 진행 상황을 놓치지 않는다 (필수는 아니다).
+
+## 원칙
+
+- **원문에 없는 내용을 사실처럼 쓰지 않는다.** 배경지식 보충은 항상 "원문 인용"과
+  라벨을 분리해서 구분한다 (`/potato-lit-review`의 "존재하지 않는 논문을 만들어내지
+  않는다" 원칙과 같은 정신).
+- **읽지 않은 구간을 앞질러 요약하지 않는다.** 사용자가 다음으로 넘어가자고 할
+  때만 진행한다.
+- **그림은 저작권을 의식한다.** 개인 학습 노트(로컬 폴더, 개인 볼트)에 원문 그림을
+  그대로 오려 쓰는 것은 통상적인 개인 학습 목적 사용이지만, 이 결과물을 공개
+  저장소나 공유 링크에 올릴 때는 그림 포함 여부를 사용자에게 먼저 확인한다.
+- 로컬 파일이라 KaTeX·폰트는 CDN 링크로 충분하다. 완전 오프라인 환경이면 CDN
+  대신 로컬 번들이 필요하다고 미리 알린다.
+
+## 예시
+
+`example/index.html`을 브라우저로 열어보면 실제로 어떤 화면이 나오는지 볼 수
+있다 (내용은 전부 더미 — 실제 논문이 아니다). 목차 상태 아이콘, 원문/번역/해설
+박스, KaTeX 수식 렌더링, `example/figure1.html`로 이어지는 그림 A/B/C 분해
+패턴까지 한 번에 확인할 수 있다.
+
+## 다음 단계
+
+- 다 읽었고 코드로 재현하고 싶다 → `/potato-reproduce`
+- 이 논문 주변 선행·후속 연구까지 넓게 보고 싶다 → `/potato-lit-review`
+- 이 논문 방법을 우리 데이터에 적용해 실험하고 싶다 → `/potato-experiment`

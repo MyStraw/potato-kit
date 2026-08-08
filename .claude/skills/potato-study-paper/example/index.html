@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>예시: Toy-Net 논문 같이 읽기</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ]
+  });"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+<nav id="toc">
+  <strong>목차</strong><br><br>
+  <a href="#overview" class="status-done">개요 (제목/저자)</a>
+  <a href="#abstract" class="status-done">Abstract</a>
+  <a href="figure1.html" class="status-done">🖼 Figure 1 A/B/C 상세 해설</a>
+  <a href="#next-section" class="status-next">2장 (다음 구간)</a>
+  <a href="#later-section" class="status-todo">3장 (예정)</a>
+  <a href="#later-section2" class="status-todo">실험 (예정)</a>
+</nav>
+
+<main>
+  <div class="explain" style="border-color:var(--accent); background: var(--accent-soft);">
+    <div class="label" style="color:var(--accent);">이 페이지는 예시입니다</div>
+    <code>/potato-study-paper</code> 스킬이 만드는 학습 노트가 실제로 어떻게 생겼는지 보여주기 위한
+    <strong>가상의 더미 콘텐츠</strong>입니다. "Toy-Net"이라는 논문은 실존하지 않습니다 — 형식(원문/번역/해설
+    박스, 수식 렌더링, 그림 낱개 해설 페이지 패턴)만 참고하세요. 실제 사용 시에는 이 폴더를 통째로 복사해
+    <code>notes/study-&lt;논문 슬러그&gt;/</code>에 놓고 내용을 갈아끼우면 됩니다.
+  </div>
+
+  <header class="page-head">
+    <h1>📖 Toy-Net 논문 같이 읽기 (예시)</h1>
+    <div class="meta">
+      Toy-Net: A Padding-Aware Attention Mechanism for Sequence Tagging (가상의 예시 논문)<br>
+      원본: <code>papers/toy-net.pdf</code> (실제로는 존재하지 않음 — 데모용)
+    </div>
+    <span class="updated-badge">마지막 업데이트: 예시 · Abstract까지 정리됨</span>
+  </header>
+
+  <section id="overview">
+    <h2>개요</h2>
+    <p>시퀀스 태깅에서 패딩 토큰이 어텐션 가중치를 오염시키는 문제를 지적하고, 패딩을 인식하는
+    마스킹된 어텐션 메커니즘을 제안한다는 가상의 논문입니다. (실제 방법론과 무관한 데모 텍스트)</p>
+  </section>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+
+    <div class="quote en">
+      <div class="label">원문</div>
+      Sequence tagging models that rely on self-attention often suffer when input sequences are padded to a fixed length, as padding tokens can distort the attention distribution.
+    </div>
+    <div class="explain">
+      <div class="label">번역 · 해설</div>
+      셀프 어텐션 기반 시퀀스 태깅 모델은, 입력을 고정 길이로 맞추려고 넣는 <strong>패딩 토큰</strong>이
+      어텐션 분포를 왜곡시킬 수 있어 문제가 된다는 도입부입니다.<br><br>
+      이렇게 <strong>원문을 그대로 인용(.quote)</strong>한 뒤, 바로 아래 <strong>번역·해설(.explain)</strong>을
+      붙이는 게 이 템플릿의 기본 단위입니다. 원문에 없는 배경지식을 보충할 때도 이 박스 안에서, "원문이 한 말"과
+      섞이지 않게 씁니다.
+    </div>
+
+    <div class="quote en">
+      <div class="label">원문</div>
+      We propose Toy-Net, which masks padding positions before the softmax step, ensuring that attention weight is only distributed across valid tokens.
+    </div>
+    <div class="explain">
+      <div class="label">번역 · 해설</div>
+      Toy-Net은 소프트맥스를 적용하기 <em>전에</em> 패딩 위치를 마스킹해서, 어텐션 가중치가 실제 토큰에만
+      분배되도록 한다는 제안입니다. 수식으로 보면 이런 식입니다 (역시 예시):
+    </div>
+
+    <p style="text-align:center;">$$\alpha_i = \frac{\exp(e_i) \cdot m_i}{\sum_{j=1}^{n} \exp(e_j) \cdot m_j}$$</p>
+
+    <table class="symbol-table">
+      <tr><th>기호</th><th>의미</th></tr>
+      <tr><td>$e_i$</td><td>토큰 $i$의 raw 어텐션 스코어</td></tr>
+      <tr><td>$m_i \in \{0,1\}$</td><td>패딩 마스크 — 실제 토큰이면 1, 패딩이면 0</td></tr>
+      <tr><td>$\alpha_i$</td><td>정규화된 어텐션 가중치 (패딩 위치는 항상 0)</td></tr>
+    </table>
+
+    <div class="example">
+      <div class="label">토이 예시</div>
+      길이 5로 패딩된 문장에서 실제 토큰은 앞 3개뿐이라고 하면 ($m = [1,1,1,0,0]$), 마스킹 전에는 패딩
+      위치도 $\exp(e_j)$만큼 분모에 기여해서 실제 토큰들의 가중치가 과소평가됩니다. 마스킹 후에는 분모가
+      실제 토큰 3개의 합으로만 계산되어 왜곡이 사라집니다. — 이런 식으로 작은 숫자로 손으로 따라가 볼 수
+      있는 예시를 <code>.example</code> 박스에 넣습니다.
+    </div>
+
+    <figure>
+      <div class="placeholder-fig">
+        (실제 사용 시 여기에 pdftoppm + ffmpeg로 오려낸<br>원문 Figure 이미지가 들어갑니다)
+      </div>
+      <figcaption>원문 Figure 1 자리 — 이 데모에는 저작권 문제를 피하려고 실제 이미지 대신 자리표시만 넣었습니다.</figcaption>
+    </figure>
+
+    <div class="explain">
+      <div class="label">Figure 1 구조 미리보기</div>
+      <div class="pipeline">
+        <div class="box">입력 시퀀스<br><span style="color:var(--text-dim)">+ 패딩</span></div>
+        <div class="arrow">→</div>
+        <div class="box">마스크 생성<br><span style="color:var(--text-dim)">m ∈ {0,1}</span></div>
+        <div class="arrow">→</div>
+        <div class="box">마스킹된 어텐션<br><span style="color:var(--text-dim)">softmax(e·m)</span></div>
+        <div class="arrow">→</div>
+        <div class="box">태그 예측</div>
+      </div>
+      그림이 여러 서브파트(A/B/C 등)로 나뉘어 있고 각각을 자세히 설명해야 할 때는, 본문에 다 넣지 말고
+      아래처럼 별도 페이지로 뜯어서 링크로 연결합니다.
+      <p style="margin-top:0.8rem;">👉 <a href="figure1.html"><strong>Figure 1 A/B/C 낱개로 뜯어서 자세히 보기 (예시)</strong></a></p>
+    </div>
+  </section>
+
+  <hr class="sep">
+  <p style="color:var(--text-dim); text-align:center;">
+    실제 사용 시에는 여기서부터 "2장", "3장", "실험" 순서로 <strong>사용자가 다음으로 넘어가자고 할 때마다</strong>
+    한 구간씩 이어붙입니다. 목차 왼쪽의 상태 아이콘(✅ 완료 / ▶️ 다음 / 흐림 예정)도 그때그때 갱신합니다.
+  </p>
+
+</main>
+</div>
+</body>
+</html>

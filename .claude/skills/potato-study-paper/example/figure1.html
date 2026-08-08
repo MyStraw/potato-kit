@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Figure 1 뜯어보기 (예시) — Toy-Net</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ]
+  });"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+
+<nav id="toc">
+  <strong>Figure 1 목차</strong><br><br>
+  <a href="#panel-a" class="status-done">A. Input Encoding</a>
+  <a href="#panel-b" class="status-done">B. Masked Attention</a>
+  <a href="#panel-c" class="status-done">C. Tag Prediction</a>
+  <br>
+  <a href="index.html">← 본문으로 돌아가기</a>
+</nav>
+
+<main>
+  <div class="breadcrumb"><a href="index.html">Toy-Net 논문 같이 읽기 (예시)</a> / Figure 1 뜯어보기</div>
+
+  <div class="explain" style="border-color:var(--accent); background: var(--accent-soft);">
+    <div class="label" style="color:var(--accent);">이 페이지는 예시입니다</div>
+    실제 논문이 아닌 데모입니다. 그림이 A/B/C처럼 여러 서브파트로 나뉘어 있을 때, 각 파트를 원문에서
+    오려낸 이미지 + 상세 해설로 <strong>낱개로 뜯어보는 페이지</strong>의 형태를 보여줍니다. 여기서는
+    저작권 문제를 피하려고 실제 그림 대신 자리표시(<code>.placeholder-fig</code>)를 넣었습니다 —
+    실제 사용 시에는 <code>images/fig1-A.png</code> 같은 실제 크롭 이미지로 바뀝니다.
+  </div>
+
+  <header class="page-head">
+    <h1>🖼️ Figure 1 뜯어보기: A / B / C 상세 해설 (예시)</h1>
+    <div class="meta">
+      가상 논문 Toy-Net의 Figure 1을 세 조각으로 나눠 하나씩 설명하는 데모 페이지입니다.
+    </div>
+  </header>
+
+  <!-- ===================== PANEL A ===================== -->
+  <section id="panel-a">
+    <h2>A. Input Encoding</h2>
+    <div class="panel">
+      <span class="panel-tag">PANEL A</span>
+      <figure>
+        <div class="placeholder-fig">여기에 원문에서 크롭한<br>Panel A 이미지 (images/fig1-A.png)</div>
+      </figure>
+    </div>
+
+    <div class="explain">
+      <div class="label">그림이 보여주는 것 (예시 설명)</div>
+      입력 문장이 고정 길이 $n$으로 패딩되고, 동시에 마스크 벡터 $\mathbf{m} \in \{0,1\}^n$이 만들어지는
+      과정을 보여준다고 가정합니다. 실제 사용 시에는 여기에 그림에 그려진 각 화살표·박스가 논문 본문의
+      어느 수식·설명과 대응하는지 짚어줍니다.
+    </div>
+  </section>
+
+  <!-- ===================== PANEL B ===================== -->
+  <section id="panel-b">
+    <h2>B. Masked Attention Block</h2>
+    <div class="panel">
+      <span class="panel-tag">PANEL B</span>
+      <figure>
+        <div class="placeholder-fig">여기에 원문에서 크롭한<br>Panel B 이미지 (images/fig1-B.png)</div>
+      </figure>
+    </div>
+
+    <div class="explain">
+      <div class="label">그림이 보여주는 것 (예시 설명)</div>
+      마스킹이 소프트맥스 <em>이전</em>에 적용된다는 걸 보여주는 내부 구조라고 가정합니다.
+      본문에서 다룬 수식과 연결합니다:
+    </div>
+    <div class="example">
+      <div class="label">수식 다시 보기</div>
+      $$\alpha_i = \frac{\exp(e_i) \cdot m_i}{\sum_{j=1}^{n} \exp(e_j) \cdot m_j}$$
+      (<a href="index.html#abstract">본문 Abstract 절</a>에서 이미 다룬 수식 — 그림 설명 페이지에서
+      다시 등장할 때는 이렇게 본문으로 되돌아가는 링크를 함께 둡니다.)
+    </div>
+  </section>
+
+  <!-- ===================== PANEL C ===================== -->
+  <section id="panel-c">
+    <h2>C. Tag Prediction</h2>
+    <div class="panel">
+      <span class="panel-tag">PANEL C</span>
+      <figure>
+        <div class="placeholder-fig">여기에 원문에서 크롭한<br>Panel C 이미지 (images/fig1-C.png)</div>
+      </figure>
+    </div>
+
+    <div class="explain">
+      <div class="label">그림이 보여주는 것 (예시 설명)</div>
+      마스킹된 어텐션 출력이 태그 분류기로 들어가 최종 라벨을 예측하는 과정이라고 가정합니다. 아직
+      본문에서 안 읽은 뒷부분(예: 손실함수 정의)이 그림에 나와 있다면, <strong>먼저 해당 페이지를 읽어
+      정확한 수식을 확보한 뒤에</strong> 이 설명을 씁니다 — 그림만 보고 추측해서 쓰지 않습니다.
+    </div>
+  </section>
+
+  <hr class="sep">
+  <p style="color:var(--text-dim); text-align:center;">
+    <a href="index.html">← 본문 목차로 돌아가기</a>
+  </p>
+
+</main>
+</div>
+</body>
+</html>

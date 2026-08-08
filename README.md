@@ -12,13 +12,13 @@
 ![Platform](https://img.shields.io/badge/Windows%20·%20macOS%20·%20Linux-지원-2ea44f?style=flat-square)
 ![Claude](https://img.shields.io/badge/Claude%20Code-지원-8A63D2?style=flat-square)
 ![Codex](https://img.shields.io/badge/Codex%20CLI-지원-10A37F?style=flat-square)
-![Skills](https://img.shields.io/badge/스킬-13종-blue?style=flat-square)
+![Skills](https://img.shields.io/badge/스킬-14종-blue?style=flat-square)
 ![Packs](https://img.shields.io/badge/전공팩-7종-orange?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
 <br>
 
-[**설치**](#-설치-5분) · [**처음이라면**](#-claude-code를-한-번도-안-써봤다면) · [**첫 실행**](#-첫-실행--나는-어디서-시작하나) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-13종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
+[**설치**](#-설치-5분) · [**처음이라면**](#-claude-code를-한-번도-안-써봤다면) · [**첫 실행**](#-첫-실행--나는-어디서-시작하나) · [**전공 팩**](#-전공-팩-끼우기) · [**스킬**](#-스킬-14종) · [**사용법 가이드**](./GUIDE.md) · [**완주 예제**](./projects/_example/)
 
 </div>
 
@@ -111,7 +111,7 @@ Codex 는 구조가 달라 **일부만 그대로 옮겨집니다.** 아래 표�
 | :-- | :-: | :-- |
 | 운영 규칙 | `CLAUDE.md` ✅ | `AGENTS.md` ✅ 자동 생성 |
 | MCP 서버 | ✅ | ✅ `codex mcp add` |
-| 슬래시 명령 (`/potato-research` 등) | ✅ 13종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
+| 슬래시 명령 (`/potato-research` 등) | ✅ 14종 | ❌ → **말로 요청**하면 AGENTS.md 가 해당 스킬 파일로 라우팅 |
 | 서브에이전트 4종 | ✅ 자동 위임 | ❌ → 역할 파일을 읽고 직접 수행 |
 
 절차 자체는 같습니다. Codex 도 파일을 읽을 수 있으므로,
@@ -241,7 +241,7 @@ Claude Code 안에서 `/`로 시작하는 명령입니다. **미리 짜둔 작�
 | 그냥 말하기 | `이 데이터 좀 살펴봐줘` ← 이것도 됩니다 |
 | 슬래시 명령 | `/potato-eda data/train.csv` ← 더 정확하고 빠릅니다 |
 
-**`/potato-` 까지만 치면 목록이 뜹니다.** 13개 중에 골라 쓰면 돼요.
+**`/potato-` 까지만 치면 목록이 뜹니다.** 14개 중에 골라 쓰면 돼요.
 
 </details>
 
@@ -362,13 +362,15 @@ claude
 <td>
 
 ```
-/potato-lit-review  선행·후속 지형 파악
+/potato-lit-review    선행·후속 지형 파악
      ↓
-/potato-reproduce   저자 코드 재현 → 원 논문 수치와 대조
+/potato-study-paper   (옵션) 논문 한 편을 처음부터 정독 — 번역·해설·수식이 브라우저 HTML로 쌓인다
+     ↓
+/potato-reproduce     저자 코드 재현 → 원 논문 수치와 대조
      ↓
 데이터 차이 분석  내 데이터 vs 논문 데이터
      ↓
-/potato-experiment  원 방법 vs 내 아이디어 (ablation)
+/potato-experiment    원 방법 vs 내 아이디어 (ablation)
      ↓
 /potato-report
 ```
@@ -575,13 +577,14 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 
 ---
 
-## ⚡ 스킬 13종
+## ⚡ 스킬 14종
 
 | 스킬 | 하는 일 |
 | :-- | :-- |
 | **`/potato-research`** | **연구 한 사이클 반자동 진행** — 뭘 할지 모르면 여기서 시작 |
 | **`/potato-start`** | 현재 폴더를 연구 프로젝트로 초기화 |
 | `/potato-lit-review <주제>` | 논문·근거 조사 → 정리 노트 |
+| `/potato-study-paper <논문 PDF>` | 논문 한 편 정독 → 번역·해설·수식이 쌓이는 **HTML 학습 노트** |
 | `/potato-find-data <주제>` | 공개 데이터 발굴 → **수집 스크립트** → `data/` 적재 |
 | `/potato-eda <파일>` | 탐색적 분석 + HTML 리포트 |
 | `/potato-experiment` | 전처리 → 모델 비교 → **방법론 감사** → 결과 종합 |
@@ -608,6 +611,10 @@ Claude에게 `"재료공학 팩 만들어줘"` 라고 시켜도 됩니다 —
 `CLAUDE.md` 가 있어야 적용됩니다.** `/potato-start` 가 그걸 놓아줍니다.
 
 각 스킬은 **혼자서도, 이어서도** 동작합니다.
+
+> 논문 관련 작업은 목적에 따라 셋 중 골라 쓰세요: 여러 편을 넓게 훑으려면
+> `/potato-lit-review`, 한 편을 처음부터 끝까지 정독하려면 `/potato-study-paper`,
+> 코드로 재현하려면 `/potato-reproduce`. 순서대로 이어서 써도 됩니다.
 
 ---
 
@@ -674,7 +681,7 @@ potato-kit/
 ├── LICENSE                   MIT
 ├── .claude/
 │   ├── agents/    literature-scout · data-analyst · methods-reviewer · report-writer
-│   ├── skills/    슬래시 명령 13종
+│   ├── skills/    슬래시 명령 14종
 │   ├── statusline/ 상태줄 스크립트 (py·ps1)
 │   └── packs/     전공 팩 7종 (+ 새 팩 만드는 법)
 └── projects/

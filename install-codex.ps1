@@ -105,6 +105,7 @@ Codex 에는 슬래시 스킬이 없다. 대신 **아래 파일을 직접 읽고
 | "연구 시작", "처음부터 끝까지", 뭘 할지 모를 때 | ``$KitDir\.claude\skills\potato-research\SKILL.md`` |
 | "이 폴더 세팅", "프로젝트 만들어줘" | ``$KitDir\.claude\skills\potato-start\SKILL.md`` |
 | "논문 찾아줘", "선행연구" | ``$KitDir\.claude\skills\potato-lit-review\SKILL.md`` |
+| "이 논문 같이 읽어줘", "논문 정독하고 싶어" | ``$KitDir\.claude\skills\potato-study-paper\SKILL.md`` |
 | "데이터 어디서 구하지", "데이터 찾아줘" | ``$KitDir\.claude\skills\potato-find-data\SKILL.md`` |
 | "이 데이터 봐줘", "EDA" | ``$KitDir\.claude\skills\potato-eda\SKILL.md`` |
 | "모델 만들어줘", "실험 돌려줘" | ``$KitDir\.claude\skills\potato-experiment\SKILL.md`` |

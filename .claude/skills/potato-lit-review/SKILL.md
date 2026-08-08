@@ -82,5 +82,6 @@ description: 논문·근거를 조사해 정리 노트를 만든다. 새 주제�
 ## 다음 단계
 
 - 방향이 정해졌다 → `/potato-experiment`
+- 핵심 논문 한 편을 처음부터 끝까지 정독하고 싶다 → `/potato-study-paper`
 - 논문을 재현하고 싶다 → `/potato-reproduce`
 - 데이터가 필요하다 → `/potato-find-data`
