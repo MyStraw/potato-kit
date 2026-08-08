@@ -13,7 +13,7 @@ description: 터미널 아래에 상태줄(로그인 계정·폴더·브랜치·
 
 ## 이게 뭔가
 
-Claude Code 화면 맨 아래에 한 줄로 세션 정보를 상시 표시한다:
+Claude Code 화면 맨 아래에 세 줄로 세션 정보를 상시 표시한다 (계정·폴더 / 모델·컨텍스트 / 사용량):
 
 ```
 🥔 potato@gmail.com | 📁 my-project (main) | Sonnet | 컨텍스트 34% | 사용량 5h 24% · 7d 41% | +156/-23
