@@ -61,7 +61,7 @@ if ($branch) { $dirseg += " $DIM($branch)$RESET" }
 $line1 += $dirseg
 
 # 3) 모델
-$line2 += "$e[1;31m$($d.model.display_name)$RESET"  # 모델명은 굵은 빨강
+$line2 += "$e[1;35m$($d.model.display_name)$RESET"  # 모델명은 굵은 마젠타
 
 # 4) 컨텍스트 사용률 (첫 응답 전에는 null 이라 생략된다)
 $pct = $d.context_window.used_percentage

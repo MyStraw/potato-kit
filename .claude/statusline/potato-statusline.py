@@ -65,7 +65,7 @@ line1.append(f"📁 {name}" + (f" {DIM}({branch}){RESET}" if branch else ""))
 
 # 3) 모델
 model = (d.get("model") or {}).get("display_name") or "?"
-line2.append(f"\033[1;31m{model}{RESET}")  # 모델명은 굵은 빨강 — 어느 모델인지 한눈에
+line2.append(f"\033[1;35m{model}{RESET}")  # 모델명은 굵은 마젠타 — 사용량 경고(빨강)와 구분
 
 # 4) 컨텍스트 사용률 (첫 응답 전에는 null 이라 생략된다)
 pct = (d.get("context_window") or {}).get("used_percentage")
