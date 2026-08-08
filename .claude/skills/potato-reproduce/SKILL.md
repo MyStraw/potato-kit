@@ -72,6 +72,25 @@ conda run -n potato-<이름> pip install -r external/<name>/requirements.txt
 > macOS에는 기본 탑재돼 있지 않다. **Windows·Linux에서는 발생하지 않는다.**
 > 시운전에서 LightGBM이 이것 때문에 죽었고, conda 한 줄로 해결됐다.
 
+### 3.5 맥(Apple Silicon)에서 GPU 학습 코드를 돌리기 전 — 사람 확인 게이트
+
+원 코드가 CUDA 전제(딥러닝 학습)인데 맥 MPS로 돌린다면, **첫 학습을 시작하기 전에**
+아래 표를 실제로 점검해 채운 뒤 사용자에게 보여주고 진행 확인을 받는다.
+재현이든 아이디어 확장이든 똑같이 적용한다.
+
+| 점검 | 왜 | 확인 방법 |
+| --- | --- | --- |
+| dtype 기본값 | PyTorch는 CPU/CUDA/MPS 모두 기본 **float32**다. "CPU는 float64라 더 정확"은 오해 — 원 논문의 CUDA 학습도 float32였다 | `torch.get_default_dtype()` |
+| numpy → torch 캐스팅 | numpy 기본은 float64. `torch.tensor(np배열)` 경로로 float64가 섞이면 **MPS는 크래시**하거나 조용히 CPU로 폴백한다 | 텐서 생성 지점마다 `dtype=torch.float32` 명시 + 데이터 로더에 dtype assert |
+| MPS 미지원 연산 | 일부 연산이 MPS에 없다 | `PYTORCH_ENABLE_MPS_FALLBACK=1` 설정 + 폴백 경고 로그를 실제로 읽는다 |
+| CPU↔MPS 동치성 | 커널 구현 차이로 미세한 수치 차이가 난다 | **같은 시드로 1-epoch smoke를 CPU와 MPS 각각** 돌려 val loss 소수 4자리 대조. 통과 후에만 전체 매트릭스 |
+| 판정 기준 | 하드웨어 간 bitwise 재현은 불가능하다 (CUDA GPU끼리도 기종·드라이버가 다르면 안 맞는다) | 재현 판정은 **논문 보고 평균 ± 표준편차 이내**로. 대조표에 기준을 명시 |
+| 근접값 뺄셈 | float32 상대오차(1e-6~1e-8)가 유일하게 증폭되는 곳 — 거의 같은 값의 차, 분산 0 근처 | 그런 연산이 핵심 경로에 있으면 그 부분만 CPU float64로 계산해 대조 |
+| 프레임워크 버전 | 옛 pytorch-lightning(≤1.6)은 MPS accelerator가 없다 | 포팅 필요 여부를 먼저 확인, 포팅했다면 손실·평가 로직이 보존됐는지 diff |
+
+**게이트 규칙**: 표를 채워 사용자에게 보여주고 승인받기 전에는 전체 학습을 시작하지
+않는다. smoke가 어긋나면 하이퍼파라미터가 아니라 **dtype과 연산 폴백부터** 의심한다.
+
 ### 4. 원 논문 결과 재현 — 목표점
 
 **저자가 쓴 데이터로, 저자 설정 그대로 돌린다.** 여기서 내 데이터를 쓰면 안 된다.
